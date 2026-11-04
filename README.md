@@ -255,9 +255,9 @@ npm run build
 
 | Recurso | Enlace Verificado | Estado de Comprobación |
 | :--- | :--- | :--- |
-| **Landing Page en Vercel (Producción)** | `[https://tp3-frontend-datahell.vercel.app/](https://tp-3-frontend-datahell.vercel.app/)` | Despliegue en Vercel con reglas de rewrites en `vercel.json` |
-| **Despliegue en GitHub Pages** | `[https://cuartocuatrimestre2026-oss.github.io/TP3-FRONTEND-DATAHELL/](https://cuartocuatrimestre2026-oss.github.io/TP3-FRONTEND-DATAHELL/)` | Despliegue automatizado continuo mediante GitHub Actions |
-| **Repositorio Oficial GitHub** | `[https://github.com/cuartocuatrimestre2026-oss/TP3-FRONTEND-DATAHELL](https://github.com/cuartocuatrimestre2026-oss/TP3-FRONTEND-DATAHELL)` | Código fuente íntegro, commits semánticos y assets |
+| **Landing Page en Vercel (Producción)** | [tp3-frontend-datahell.vercel.app](https://tp3-frontend-datahell.vercel.app/) | Despliegue en Vercel con reglas de rewrites en `vercel.json` |
+| **Despliegue en GitHub Pages** | [cuartocuatrimestre2026-oss.github.io/TP3-FRONTEND-DATAHELL](https://cuartocuatrimestre2026-oss.github.io/TP3-FRONTEND-DATAHELL/) | Despliegue automatizado continuo mediante GitHub Actions |
+| **Repositorio Oficial GitHub** | [github.com/cuartocuatrimestre2026-oss/TP3-FRONTEND-DATAHELL](https://github.com/cuartocuatrimestre2026-oss/TP3-FRONTEND-DATAHELL) | Código fuente íntegro, commits semánticos y assets |
 | **Repositorio Previo (TP2)** | [TP2 DataHell GitHub](https://github.com/cuartocuatrimestre2026-oss/TP2-FRONTEND-DATAHELL) | Referencia histórica de evolución y lecciones aprendidas |
 
 ---

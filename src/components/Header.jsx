@@ -16,7 +16,7 @@ export const Header = () => {
           {/* LADO IZQUIERDO: Logo + Marca Principal + IFTS 29 */}
           <a href="#inicio" className="brand-badge" aria-label="Ir al inicio de Tap2Order">
             <img 
-              src="/img/tap2order-logo.png" 
+              src="./img/tap2order-logo.png" 
               alt="Logotipo oficial de Tap2Order" 
               className="brand-logo-img" 
             />

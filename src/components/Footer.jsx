@@ -10,12 +10,12 @@ export const Footer = () => {
           <div className="footer-brand-col">
             <div className="footer-brand-header">
               <img 
-                src="/img/tap2order-logo.png" 
+                src="./img/tap2order-logo.png" 
                 alt="Logotipo oficial de Tap2Order" 
                 className="footer-logo-img" 
               />
               <img 
-                src="/img/logo-DataHell.png" 
+                src="./img/logo-DataHell.png" 
                 alt="Logotipo de DataHell" 
                 className="footer-logo-img" 
               />

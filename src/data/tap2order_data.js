@@ -2,7 +2,7 @@ export const startupInfo = {
   nombre: "Tap2Order",
   rubro: "Gastronomía & Turismo en Cruceros",
   subtitulo: "Pedidos a bordo con entrega en camarote o atención en comedor",
-  logo: "/img/tap2order-logo.png",
+  logo: "./img/tap2order-logo.png",
   bloque: "Bloque S14-C · Aviso y modificaciones",
   grupoAsignado: "Grupo 09 · IFTS N°29",
   origenLogica: "Lógica formal por estudiantes del IFTS N°16",

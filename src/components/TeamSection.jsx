@@ -55,7 +55,7 @@ export const TeamSection = () => {
                     className="member-avatar-img"
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = '/img/logo-DataHell.png';
+                      e.target.src = './img/logo-DataHell.png';
                     }}
                   />
                 </div>

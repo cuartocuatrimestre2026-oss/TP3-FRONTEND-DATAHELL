@@ -1,0 +1,143 @@
+.site-footer {
+  background: var(--footer-bg);
+  border-top: 1px solid var(--border-color);
+  padding: 64px 0 32px;
+  color: var(--text-secondary);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1.3fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+.footer-brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-brand-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.footer-brand-title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.footer-brand-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 440px;
+}
+
+.footer-col-title {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.footer-links-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links-list a {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.footer-links-list a:hover {
+  color: var(--brand-teal);
+}
+
+[data-theme="light"] .footer-links-list a:hover {
+  color: #0d9488;
+}
+
+.footer-link-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary) !important;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.footer-link-active:hover {
+  color: var(--brand-teal) !important;
+  transform: translateX(3px);
+}
+
+[data-theme="light"] .footer-link-active:hover {
+  color: #0d9488 !important;
+}
+
+.footer-meta-pill {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.footer-date-tag {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--brand-amber);
+}
+
+[data-theme="light"] .footer-date-tag {
+  color: #d97706;
+}
+
+.footer-bottom-bar {
+  border-top: 1px solid var(--border-color);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.footer-institution-badge {
+  font-family: var(--font-mono);
+  background: var(--bg-card);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}

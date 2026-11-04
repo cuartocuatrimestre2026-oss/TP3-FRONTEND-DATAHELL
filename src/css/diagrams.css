@@ -1,0 +1,256 @@
+.diagrams-section {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--border-color);
+  background: radial-gradient(circle at 50% 80%, var(--accent-cyan-soft) 0%, transparent 60%);
+}
+
+.diagram-block-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  margin-bottom: 48px;
+  box-shadow: var(--shadow-sm);
+}
+
+.diagram-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 16px;
+}
+
+.diagram-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.diagram-title {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.diagram-legend {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+}
+
+.legend-dot.start { background: var(--accent-cyan); }
+.legend-dot.decision { background: var(--accent-warning); }
+.legend-dot.action { background: var(--accent-primary); }
+.legend-dot.success { background: var(--accent-success); }
+.legend-dot.human { background: var(--accent-danger); }
+
+/* Diagram Canvas Flow Container */
+.flow-canvas-container {
+  overflow-x: auto;
+  padding: 24px 8px;
+}
+
+.flow-chart-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  min-width: 720px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Individual Flow Node */
+.flow-node {
+  width: 100%;
+  max-width: 480px;
+  background: var(--bg-card-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.flow-node:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-primary);
+}
+
+.flow-node.start {
+  border-left: 4px solid var(--accent-cyan);
+}
+
+.flow-node.decision {
+  border-left: 4px solid var(--accent-warning);
+  background: var(--bg-card);
+}
+
+.flow-node.action {
+  border-left: 4px solid var(--accent-primary);
+}
+
+.flow-node.success {
+  border-left: 4px solid var(--accent-success);
+  background: var(--accent-success-soft);
+}
+
+.flow-node.human {
+  border-left: 4px solid var(--accent-danger);
+  background: var(--accent-danger-soft);
+}
+
+.node-meta-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.node-actor-badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.node-order-pill {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  background: var(--border-color);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+}
+
+.node-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.node-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Branching Fork (SÍ / NO decisions) */
+.flow-fork-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  width: 100%;
+  max-width: 820px;
+  position: relative;
+}
+
+.branch-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.branch-path-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.branch-path-badge.yes {
+  background: var(--accent-success-soft);
+  color: var(--accent-success);
+  border: 1px solid var(--accent-success);
+}
+
+.branch-path-badge.no {
+  background: var(--accent-warning-soft);
+  color: var(--accent-warning);
+  border: 1px solid var(--accent-warning);
+}
+
+.branch-path-badge.alert {
+  background: var(--accent-danger-soft);
+  color: var(--accent-danger);
+  border: 1px solid var(--accent-danger);
+}
+
+/* Direction Arrow Connector */
+.flow-arrow-down {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--accent-primary);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+}
+
+.arrow-line {
+  width: 2px;
+  height: 20px;
+  background: var(--border-color);
+}
+
+.flow-node:hover + .flow-arrow-down .arrow-line {
+  background: var(--accent-primary);
+}
+
+/* Supuestos Agregados Banner */
+.diagram-assumptions-box {
+  margin-top: 24px;
+  padding: 16px 20px;
+  background: var(--bg-page);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.assumptions-icon {
+  color: var(--accent-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.assumptions-text-group {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.assumptions-title {
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}

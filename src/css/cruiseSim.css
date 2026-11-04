@@ -1,0 +1,390 @@
+/* ========================================================
+   CONSOLA DE SIMULACIÓN Y TICKET DIGITAL TAP2ORDER
+   ======================================================== */
+
+.cruise-simulator-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.sim-top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  background: var(--bg-card-elevated);
+  border-bottom: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sim-brand-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.sim-mode-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.sim-tab-pill {
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sim-tab-pill:hover {
+  border-color: var(--brand-teal);
+  color: var(--text-primary);
+}
+
+.sim-tab-pill.active {
+  background: var(--brand-teal);
+  color: #0a1524;
+  border-color: var(--brand-teal);
+  box-shadow: 0 0 12px rgba(43, 168, 160, 0.3);
+}
+
+[data-theme="light"] .sim-tab-pill.active {
+  background: var(--brand-navy);
+  color: #ffffff;
+  border-color: var(--brand-navy);
+}
+
+/* Grilla del simulador */
+.sim-body-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  padding: 28px;
+}
+
+.sim-inputs-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compact-label {
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.compact-select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-page);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  font-family: inherit;
+  outline: none;
+  font-weight: 600;
+  transition: border-color var(--transition-fast);
+}
+
+.compact-select:focus {
+  border-color: var(--brand-teal);
+}
+
+.toggles-box {
+  background: var(--bg-page);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.box-title {
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+}
+
+.compact-toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 6px 0;
+  user-select: none;
+}
+
+.compact-toggle-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--brand-teal);
+  cursor: pointer;
+}
+
+.alert-toggle {
+  border-top: 1px dashed var(--border-color);
+  padding-top: 12px;
+}
+
+.preset-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 14px;
+  align-items: center;
+}
+
+.preset-label {
+  font-size: 0.74rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.preset-chip {
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.preset-chip:hover {
+  border-color: var(--brand-teal);
+  color: var(--text-primary);
+  background: var(--accent-primary-soft);
+}
+
+/* Ticket Digital de Crucero (Comanda Inteligente) */
+.cruise-digital-ticket {
+  background: var(--bg-page);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.cruise-digital-ticket::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--brand-teal), var(--brand-amber), var(--brand-navy));
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 14px;
+}
+
+.ticket-brand {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--brand-teal);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+[data-theme="light"] .ticket-brand {
+  color: #0f766e;
+}
+
+.ticket-order-id {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ticket-status-pill {
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ticket-status-pill.success {
+  background: var(--accent-success-soft);
+  color: var(--accent-success);
+}
+
+.ticket-status-pill.warning {
+  background: var(--accent-warning-soft);
+  color: var(--accent-warning);
+}
+
+.ticket-status-pill.danger {
+  background: var(--accent-danger-soft);
+  color: var(--accent-danger);
+}
+
+.ticket-dish-name {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.ticket-meta-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.tag-chip {
+  font-size: 0.76rem;
+  font-family: var(--font-mono);
+  background: var(--bg-card);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.ticket-decision-alert {
+  background: var(--bg-card);
+  border-left: 3px solid var(--brand-teal);
+  padding: 14px 16px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-top: 10px;
+}
+
+[data-theme="light"] .ticket-decision-alert {
+  border-left-color: #0d9488;
+}
+
+.alert-badge-label {
+  display: block;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--brand-teal);
+  margin-bottom: 4px;
+}
+
+[data-theme="light"] .alert-badge-label {
+  color: #0f766e;
+}
+
+.alert-message-text {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.ticket-action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.84rem;
+  border-top: 1px dashed var(--border-color);
+  padding-top: 12px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.action-key {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.action-val {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.btn-sync-svg {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-primary-soft);
+  border: 1px solid var(--border-highlight);
+  color: var(--brand-teal);
+  font-size: 0.88rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+[data-theme="light"] .btn-sync-svg {
+  color: #0f766e;
+  border-color: rgba(15, 118, 110, 0.3);
+}
+
+.btn-sync-svg:hover {
+  background: var(--brand-teal);
+  color: #0a1524;
+  box-shadow: 0 4px 14px rgba(43, 168, 160, 0.35);
+}
+
+[data-theme="light"] .btn-sync-svg:hover {
+  background: var(--brand-navy);
+  color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .sim-body-grid {
+    grid-template-columns: 1fr;
+  }
+}

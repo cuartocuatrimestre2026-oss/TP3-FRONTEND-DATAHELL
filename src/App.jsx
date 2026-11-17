@@ -16,6 +16,7 @@ export function App() {
   const [selectedSvgNode, setSelectedSvgNode] = useState('r5-decision');
   const [highlightFlowTabs, setHighlightFlowTabs] = useState(false);
   const [highlightSimulator, setHighlightSimulator] = useState(false);
+  const [simulatorSyncNode, setSimulatorSyncNode] = useState(null);
 
   // Scroll suave con offset directo al recuadro del diagrama (Foto 2)
   const scrollToDiagramFlowBox = () => {
@@ -31,15 +32,36 @@ export function App() {
     }
   };
 
-  // Bajar a la consola de interacción agéntica mostrando directamente la tarjeta blanca
-  const handleScrollToSimulator = () => {
+  // Bajar a la consola de interacción agéntica encuadrando la tarjeta completa
+  const handleScrollToSimulator = (targetNodeOrEvent) => {
+    if (typeof targetNodeOrEvent === 'string') {
+      setSimulatorSyncNode(targetNodeOrEvent);
+      if (targetNodeOrEvent.startsWith('r5')) setActiveFlowTab('r5');
+      else if (targetNodeOrEvent.startsWith('r6')) setActiveFlowTab('r6');
+    } else if (targetNodeOrEvent && targetNodeOrEvent.preventDefault) {
+      targetNodeOrEvent.preventDefault();
+    }
+
     const target = document.getElementById('simulador-card-anchor') || document.getElementById('simulador');
     if (target) {
-      const headerOffset = 76;
-      const elementPosition = target.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      const headerHeight = 72;
+      const targetRect = target.getBoundingClientRect();
+      const targetHeight = targetRect.height;
+      const viewportHeight = window.innerHeight;
+      
+      let targetTopOffset;
+      if (viewportHeight - headerHeight >= targetHeight + 16) {
+        // Centrarla con armonía en el espacio disponible debajo del header
+        const extraSpace = (viewportHeight - headerHeight - targetHeight) / 2;
+        targetTopOffset = headerHeight + extraSpace;
+      } else {
+        // En pantallas más ajustadas, alinear con margen de 12px debajo del header
+        targetTopOffset = headerHeight + 12;
+      }
+      
+      const scrollY = targetRect.top + window.pageYOffset - targetTopOffset;
       window.scrollTo({
-        top: offsetPosition,
+        top: Math.max(0, scrollY),
         behavior: 'smooth'
       });
       setHighlightSimulator(true);
@@ -168,7 +190,7 @@ export function App() {
               <div className="section-title-wrap">
                 <span className="section-tag">
                   <Sliders size={14} aria-hidden="true" />
-                  Simulación en Vivo · Nivel Supera
+                  Simulación en Vivo
                 </span>
                 <h2 id="simulador-heading" className="section-heading">
                   Consola de Interacción Agéntica Tap2Order
@@ -182,6 +204,7 @@ export function App() {
                 onHighlightSvgNode={handleHighlightSvgNode} 
                 onScrollToDiagram={handleScrollToDiagram}
                 currentFlow={activeFlowTab}
+                syncNodeId={simulatorSyncNode}
                 isHighlighted={highlightSimulator}
               />
             </div>

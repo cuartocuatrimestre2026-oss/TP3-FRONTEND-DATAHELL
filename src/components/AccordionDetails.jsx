@@ -76,7 +76,7 @@ export const AccordionDetails = () => {
                 <div className="expanded-exception-callout" role="region" aria-label="Excepciones y caso límite">
                   <span className="exception-title">
                     <ShieldAlert size={16} aria-hidden="true" />
-                    5. Caso Límite & Intervención Humana (Nivel Propone)
+                    5. Caso Límite & Intervención Humana
                   </span>
                   <p className="exception-desc">
                     <strong>Escenario:</strong> {s.casoLimite}

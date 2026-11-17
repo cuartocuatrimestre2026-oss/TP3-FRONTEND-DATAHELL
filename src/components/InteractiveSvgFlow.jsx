@@ -1,13 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Sparkles, Info, CheckCircle2, AlertTriangle, ShieldAlert, CornerDownRight, Sliders, ArrowDown, GitCommit } from 'lucide-react';
 
 export const InteractiveSvgFlow = ({ activeFlow = 'r5', onSelectNode, selectedNodeId, onReturnToSimulator }) => {
   const [internalSelected, setInternalSelected] = useState('r5-decision');
+  const [flashKey, setFlashKey] = useState(0);
+  const explainerRef = useRef(null);
+  const prevSelectedRef = useRef(selectedNodeId);
+
   const currentNode = selectedNodeId || internalSelected;
+
+  useEffect(() => {
+    if (selectedNodeId && selectedNodeId !== prevSelectedRef.current) {
+      prevSelectedRef.current = selectedNodeId;
+      setFlashKey(prev => prev + 1);
+    }
+  }, [selectedNodeId]);
 
   const handleNodeClick = (nodeId) => {
     setInternalSelected(nodeId);
+    setFlashKey(prev => prev + 1);
     if (onSelectNode) onSelectNode(nodeId);
+
+    // Desplazamiento suave para encuadrar la tarjeta explicativa en la vista
+    setTimeout(() => {
+      if (explainerRef.current) {
+        explainerRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest'
+        });
+      }
+    }, 40);
   };
 
   // Mapeo de la ruta de ejecución agéntica para cada estado activo
@@ -649,12 +671,12 @@ export const InteractiveSvgFlow = ({ activeFlow = 'r5', onSelectNode, selectedNo
         )}
       </div>
 
-      {/* RUTA DE PROGRESIÓN AGÉNTICA (BREADCRUMB PIPELINE APB) */}
+      {/* RUTA DE PROGRESIÓN AGÉNTICA (BREADCRUMB PIPELINE) */}
       <div className="flow-breadcrumb-container" aria-label="Ruta de decisión agéntica">
         <div className="breadcrumb-label-row">
           <span className="breadcrumb-label-tag">
             <GitCommit size={14} aria-hidden="true" />
-            Ruta de Ejecución Agéntica (Paso a Paso APB):
+            Ruta de Ejecución del Flujo:
           </span>
           <span className="breadcrumb-step-count">
             Paso: <strong>{breadcrumbSteps.findIndex(s => s.status === 'active') + 1} de {breadcrumbSteps.length}</strong>
@@ -684,7 +706,12 @@ export const InteractiveSvgFlow = ({ activeFlow = 'r5', onSelectNode, selectedNo
       </div>
 
       {/* TARJETA INTERACTIVA DE EXPLICACIÓN DEL PASO SELECCIONADO */}
-      <div className="svg-selected-explainer" aria-live="polite">
+      <div 
+        ref={explainerRef}
+        key={flashKey}
+        className="svg-selected-explainer explainer-flash" 
+        aria-live="polite"
+      >
         <div className="explainer-header">
           <span className="badge badge-primary">
             <Info size={14} aria-hidden="true" />
@@ -700,17 +727,17 @@ export const InteractiveSvgFlow = ({ activeFlow = 'r5', onSelectNode, selectedNo
         
         <div className="explainer-action-row">
           <span className="explainer-hint">
-            💡 Tocá o hacé clic en cualquier caja del diagrama para explorar la decisión del agente.
+            💡 Tocá cualquier caja para ver la decisión agéntica, o indicá el estado en la consola para probarlo en vivo.
           </span>
           {onReturnToSimulator && (
             <button
               type="button"
               className="btn-down-to-sim"
-              onClick={onReturnToSimulator}
-              title="Bajar a la consola para probar pedidos con este flujo"
+              onClick={() => onReturnToSimulator(currentNode)}
+              title="Bajar a la consola para indicar y probar este estado en vivo"
             >
               <Sliders size={14} aria-hidden="true" />
-              <span>Bajar a la Consola</span>
+              <span>Indicar Estado en la Consola</span>
               <ArrowDown size={14} aria-hidden="true" />
             </button>
           )}

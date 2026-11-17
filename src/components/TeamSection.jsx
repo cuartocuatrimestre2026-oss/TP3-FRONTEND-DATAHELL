@@ -10,7 +10,7 @@ export const TeamSection = () => {
         <div className="section-title-wrap">
           <span className="section-tag">
             <Users size={14} aria-hidden="true" />
-            Identidad de los Proponentes
+            Integrantes del Equipo
           </span>
           <h2 id="equipo-heading" className="section-heading">
             Equipo DataHell · IFTS N°29 (Grupo 09)
@@ -20,23 +20,23 @@ export const TeamSection = () => {
           </p>
         </div>
 
-        {/* Distinción explícita de las dos identidades según consigna (Página 6) */}
+        {/* Distinción explícita de las dos identidades según consigna */}
         <div className="hero-attribution-card" style={{ maxWidth: '960px', margin: '0 auto 32px', borderLeftColor: 'var(--accent-cyan)' }}>
           <span className="attribution-label" style={{ color: 'var(--accent-cyan)' }}>
             <Briefcase size={14} aria-hidden="true" style={{ display: 'inline', marginRight: '6px' }} />
-            Distinción de Identidades: Destinataria vs. Proponentes
+            Distinción de Identidades: Startup Destinataria vs. Equipo Autor
           </span>
           <p className="attribution-text">
             <strong>Startup Destinataria:</strong> <em>Tap2Order</em> (Gastronomía y turismo a bordo de cruceros), titular del problema operativo y receptora de la propuesta técnica con su logo original.<br />
-            <strong>Equipo Proponente de Soluciones:</strong> <em>DataHell</em> (IFTS N°29 - Grupo 09), autores del diseño agéntico, diagramación y construcción web asistida por IA.
+            <strong>Equipo de Desarrollo:</strong> <em>DataHell</em> (IFTS N°29 - Grupo 09), autores del diseño agéntico, diagramación y construcción web asistida por IA.
           </p>
         </div>
 
-        {/* Declaración de Revisión entre Pares (Requisito PROPONE Criterio 01) */}
+        {/* Declaración de Revisión entre Pares y Mejora Concreta */}
         <div className="hero-attribution-card" style={{ maxWidth: '960px', margin: '0 auto 40px', borderLeftColor: 'var(--accent-primary)' }}>
           <span className="attribution-label" style={{ color: 'var(--accent-primary)' }}>
             <CheckSquare size={14} aria-hidden="true" style={{ display: 'inline', marginRight: '6px' }} />
-            Criterio 01 (Nivel Propone) · Revisión entre Integrantes y Mejora Concreta
+            Revisión entre Integrantes y Mejora Concreta
           </span>
           <p className="attribution-text">
             Durante la primera iteración de la Sentencia R5, el agente propuso un flujo directo de notificación sin contemplar la latencia o desconexión satelital propia de un buque en alta mar. En la sesión de revisión interna entre <strong>Johana Navarro</strong> y <strong>Sergio Arenhardt</strong>, se detectó que esto violaba la condición <em>"solo registra el aviso como enviado después de la confirmación exitosa"</em> ante un timeout. Se introdujo como <strong>mejora concreta</strong> el estado transitorio <code>EN_CURSO</code> con candado de concurrencia y el protocolo de escalado presencial al <strong>Cabin Host</strong> tras dos reintentos fallidos.

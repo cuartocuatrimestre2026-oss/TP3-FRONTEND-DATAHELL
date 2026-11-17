@@ -19,9 +19,9 @@
 6. [Casos Límite, Excepciones e Intervención Humana](#6-casos-límite-excepciones-e-intervención-humana)
 7. [Consola y Simulador de Comandas de Crucero en Tiempo Real](#7-consola-y-simulador-de-comandas-de-crucero-en-tiempo-real)
 8. [Integrantes del Equipo y Registro de Aportes](#8-integrantes-del-equipo-y-registro-de-aportes)
-9. [Criterio 01 (Nivel Propone): Revisión entre Integrantes y Mejora Concreta](#9-criterio-01-nivel-propone-revisión-entre-integrantes-y-mejora-concreta)
+9. [Revisión entre Integrantes y Mejora Concreta (Criterio 01)](#9-revisión-entre-integrantes-y-mejora-concreta-criterio-01)
 10. [Declaración Analítica de Herramientas de IA y Modelos Empleados](#10-declaración-analítica-de-herramientas-de-ia-y-modelos-empleados)
-11. [Criterio 05 (Nivel Propone): Evidencias de Iteración Agéntica](#11-criterio-05-nivel-propone-evidencias-de-iteración-agéntica)
+11. [Evidencias de Iteración Agéntica (Criterio 05)](#11-evidencias-de-iteración-agéntica-criterio-05)
 12. [Accesibilidad Universal y Sistema de Diseño Tap2Order](#12-accesibilidad-universal-y-sistema-de-diseño-tap2order)
 13. [Instrucciones de Instalación, Reproducción y Verificación](#13-instrucciones-de-instalación-reproducción-y-verificación)
 14. [Comprobación de Enlaces y Publicación en Vercel](#14-comprobación-de-enlaces-y-publicación-en-vercel)
@@ -130,7 +130,7 @@ Para enriquecer el planteo lógico abstracto del IFTS N°16 y adecuarlo a un ent
 
 ## 6. Casos Límite, Excepciones e Intervención Humana
 
-Siguiendo el estándar de nivel **Propone**, cada flujo contempla escenarios de borde donde la automatización agéntica reconoce sus límites y delega el control en tripulantes humanos:
+Cada flujo contempla escenarios de borde donde la automatización agéntica reconoce sus límites y delega el control en tripulantes humanos:
 
 | Flujo | Escenario de Borde | Comportamiento del Agente | Tripulante Responsable |
 | :--- | :--- | :--- | :--- |
@@ -141,7 +141,7 @@ Siguiendo el estándar de nivel **Propone**, cada flujo contempla escenarios de 
 
 ## 7. Consola y Simulador de Comandas de Crucero en Tiempo Real
 
-Para superar el estándar de visualizaciones pasivas, desarrollamos la **Consola de Interacción Agéntica (`CruiseOrderSimulator.jsx`)**:
+Para ofrecer una experiencia interactiva completa frente a visualizaciones pasivas, desarrollamos la **Consola de Interacción Agéntica (`CruiseOrderSimulator.jsx`)**:
 - **Selector de Comandas de Crucero:** Salmón Atlántico Grillé (Camarote 412), Risotto de Hongos Silvestres (Comedor Principal), Hamburguesa Wagyu (Cubierta Solarium).
 - **Interruptores Dinámicos:** Permiten alternar en vivo las condiciones lógicas (versión lista, cambios pendientes, fallas de red satelital, consenso dual de cocina y pasajero).
 - **Ticket Digital de Crucero con Código de Barras Simulado:** Muestra el cambio de estado en vivo (`NOTIFICADO Y CONFIRMADO`, `AVISO RETENIDO`, `TIMEOUT SATELITAL ESCALADO`).
@@ -161,7 +161,7 @@ Para superar el estándar de visualizaciones pasivas, desarrollamos la **Consola
 
 ---
 
-## 9. Criterio 01 (Nivel Propone): Revisión entre Integrantes y Mejora Concreta
+## 9. Revisión entre Integrantes y Mejora Concreta (Criterio 01)
 
 > **Declaración Obligatoria de Revisión entre Pares:**
 > Durante la primera iteración de la Sentencia R5, el agente propuso un flujo directo de notificación sin contemplar la latencia o desconexión satelital propia de un buque en alta mar. En la sesión de revisión interna entre **Johana Navarro** y **Sergio Arenhardt**, se detectó que esto violaba la condición *"solo registra el aviso como enviado después de la confirmación exitosa"* ante un timeout. Se introdujo como **mejora concreta** el estado transitorio `EN_CURSO` con candado de concurrencia y el protocolo de escalado presencial al **Cabin Host** tras dos reintentos fallidos.
@@ -186,7 +186,7 @@ Para superar el estándar de visualizaciones pasivas, desarrollamos la **Consola
 
 ---
 
-## 11. Criterio 05 (Nivel Propone): Evidencias de Iteración Agéntica
+## 11. Evidencias de Iteración Agéntica (Criterio 05)
 
 ### Caso de Iteración 1 · Arquitectura del Simulador de Condiciones
 - **Instrucción Inicial:** *"Generá un componente en React para visualizar los diagramas de flujo de las sentencias R5 y R6 con cajas fijas y texto descriptivo."*
@@ -212,7 +212,7 @@ Para superar el estándar de visualizaciones pasivas, desarrollamos la **Consola
 
 ### Certificación WCAG 2.1 Nivel AAA
 - **Ratio de Contraste Cromático Certificado:** 
-  - Texto principal oscuro sobre `#0a1524`: Ratio **> 15:1** (supera con holgura el umbral de 7:1 exigido por AAA).
+  - Texto principal oscuro sobre `#0a1524`: Ratio **> 15:1** (excede con holgura el umbral de 7:1 exigido por AAA).
   - Texto principal claro sobre `#f4f8f9`: Ratio **> 15:1**.
 - **Navegación por Teclado:**
   - Enlace de salto rápido al contenido principal (`.skip-link`).

@@ -202,7 +202,7 @@ export const FlowSimulator = () => {
         <div className="section-title-wrap">
           <span className="section-tag">
             <Sliders size={14} aria-hidden="true" />
-            Supera: Verificación en Vivo
+            Verificación en Vivo
           </span>
           <h2 id="simulador-heading" className="section-heading">
             Simulador de Condiciones & Trazabilidad Agéntica

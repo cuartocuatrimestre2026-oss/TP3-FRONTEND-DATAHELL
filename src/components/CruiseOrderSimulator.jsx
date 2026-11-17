@@ -18,6 +18,7 @@ export const CruiseOrderSimulator = ({
   onHighlightSvgNode, 
   onScrollToDiagram,
   currentFlow = 'r5',
+  syncNodeId = null,
   isHighlighted = false
 }) => {
   const [activeTab, setActiveTab] = useState(currentFlow);
@@ -40,6 +41,63 @@ export const CruiseOrderSimulator = ({
   const [r6AprobacionCocina, setR6AprobacionCocina] = useState(true);
   const [r6ConfirmaPasajero, setR6ConfirmaPasajero] = useState(true);
   const [r6PlatoEnSalidaExpress, setR6PlatoEnSalidaExpress] = useState(false);
+
+  // Sincronizar variables al presionar "Indicar Estado en la Consola" desde el diagrama
+  useEffect(() => {
+    if (!syncNodeId) return;
+    if (syncNodeId.startsWith('r5')) {
+      setActiveTab('r5');
+      if (syncNodeId === 'r5-start') {
+        setR5Listo(false);
+        setR5CambioPendiente(false);
+        setR5AvisoEnviado(false);
+        setR5FallaSatelital(false);
+      } else if (syncNodeId === 'r5-decision') {
+        setR5Listo(true);
+        setR5CambioPendiente(false);
+        setR5AvisoEnviado(false);
+        setR5FallaSatelital(false);
+      } else if (syncNodeId === 'r5-action-send' || syncNodeId === 'r5-end-success') {
+        setR5Listo(true);
+        setR5CambioPendiente(false);
+        setR5AvisoEnviado(false);
+        setR5FallaSatelital(false);
+      } else if (syncNodeId === 'r5-action-hold' || syncNodeId === 'r5-end-hold') {
+        setR5Listo(true);
+        setR5CambioPendiente(true);
+        setR5AvisoEnviado(false);
+        setR5FallaSatelital(false);
+      } else if (syncNodeId === 'r5-exception') {
+        setR5Listo(true);
+        setR5CambioPendiente(false);
+        setR5AvisoEnviado(false);
+        setR5FallaSatelital(true);
+      }
+    } else if (syncNodeId.startsWith('r6')) {
+      setActiveTab('r6');
+      if (syncNodeId === 'r6-start') {
+        setR6AprobacionCocina(false);
+        setR6ConfirmaPasajero(false);
+        setR6PlatoEnSalidaExpress(false);
+      } else if (syncNodeId === 'r6-action-freeze' || syncNodeId === 'r6-decision-dual') {
+        setR6AprobacionCocina(true);
+        setR6ConfirmaPasajero(true);
+        setR6PlatoEnSalidaExpress(false);
+      } else if (syncNodeId === 'r6-action-create' || syncNodeId === 'r6-end-success') {
+        setR6AprobacionCocina(true);
+        setR6ConfirmaPasajero(true);
+        setR6PlatoEnSalidaExpress(false);
+      } else if (syncNodeId === 'r6-action-cancel' || syncNodeId === 'r6-end-original') {
+        setR6AprobacionCocina(false);
+        setR6ConfirmaPasajero(true);
+        setR6PlatoEnSalidaExpress(false);
+      } else if (syncNodeId === 'r6-exception') {
+        setR6AprobacionCocina(true);
+        setR6ConfirmaPasajero(true);
+        setR6PlatoEnSalidaExpress(true);
+      }
+    }
+  }, [syncNodeId]);
 
   // Plato actual
   const platoActual = mockPlatosCrucero.find(p => p.id === selectedPlato) || mockPlatosCrucero[0];

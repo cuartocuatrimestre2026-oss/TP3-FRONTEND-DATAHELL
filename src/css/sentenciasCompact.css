@@ -59,7 +59,7 @@
 }
 
 [data-theme="light"] .tag-category {
-  color: #0d9488;
+  color: #3d7580;
 }
 
 .quote-compact {
@@ -70,7 +70,7 @@
 }
 
 [data-theme="light"] .quote-compact {
-  border-left-color: #0d9488;
+  border-left-color: #3d7580;
 }
 
 .quote-eyebrow {
@@ -86,7 +86,7 @@
 }
 
 [data-theme="light"] .quote-eyebrow {
-  color: #0f766e;
+  color: #3d7580;
 }
 
 .quote-text {
@@ -159,7 +159,7 @@
 }
 
 [data-theme="light"] .formula-box {
-  color: #0f766e;
+  color: #3d7580;
 }
 
 .formula-label {
@@ -196,7 +196,7 @@
 }
 
 [data-theme="light"] .micro-box.proposal-add {
-  border-left-color: #0d9488;
+  border-left-color: #3d7580;
 }
 
 .micro-label {

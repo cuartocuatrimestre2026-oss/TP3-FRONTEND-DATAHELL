@@ -46,9 +46,9 @@
 }
 
 [data-theme="light"] .hero-meta-pill.highlight {
-  color: #0f766e;
-  background: rgba(13, 148, 136, 0.1);
-  border-color: rgba(13, 148, 136, 0.3);
+  color: #1d3c62;
+  background: rgba(29, 60, 98, 0.08);
+  border-color: rgba(29, 60, 98, 0.25);
 }
 
 .hero-title {
@@ -61,14 +61,15 @@
 }
 
 .hero-title .text-gradient {
-  color: var(--accent-primary);
-  background: linear-gradient(135deg, var(--brand-teal) 0%, #38bdf8 50%, var(--brand-amber) 100%);
+  color: var(--brand-sea-teal);
+  background: linear-gradient(135deg, #74b1bb 0%, #e0d6c6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 [data-theme="light"] .hero-title .text-gradient {
-  background: linear-gradient(135deg, #0d9488 0%, #1b3b64 60%, #d97706 100%);
+  color: #1d3c62;
+  background: linear-gradient(135deg, #1d3c62 0%, #3d7580 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -89,9 +90,9 @@
 .hero-attribution-card {
   margin-top: 10px;
   padding: 16px 20px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   background: var(--bg-card);
-  border-left: 4px solid var(--brand-teal);
+  border-left: 4px solid var(--accent-primary);
   border-top: 1px solid var(--border-color);
   border-right: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
@@ -101,17 +102,21 @@
   box-shadow: var(--shadow-sm);
 }
 
+[data-theme="light"] .hero-attribution-card {
+  border-left-color: #1d3c62;
+}
+
 .attribution-label {
   font-size: 0.75rem;
   font-family: var(--font-mono);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--brand-teal);
+  color: var(--accent-primary);
   font-weight: 700;
 }
 
 [data-theme="light"] .attribution-label {
-  color: #0f766e;
+  color: #1d3c62;
 }
 
 .attribution-text {
@@ -181,7 +186,7 @@
 }
 
 [data-theme="light"] .hero-startup-category {
-  color: #0f766e;
+  color: #1d3c62;
 }
 
 .hero-quick-specs {
@@ -248,7 +253,7 @@
 }
 
 [data-theme="light"] .stat-number {
-  color: #0d9488;
+  color: #1d3c62;
 }
 
 .stat-title {

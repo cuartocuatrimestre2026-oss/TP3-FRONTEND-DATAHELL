@@ -1,62 +1,108 @@
 /* ========================================================
-   DIAGRAMA SVG INTERACTIVO TAP2ORDER (NODOS Y LÍNEAS RESALTADAS)
+   DIAGRAMA SVG INTERACTIVO TAP2ORDER (DISEÑO CORPORATIVO LOGO)
    ======================================================== */
 
 .flow-tab-selector {
   display: flex;
   justify-content: center;
   gap: 12px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
+  scroll-margin-top: 76px;
 }
 
 .flow-tab-btn {
-  padding: 10px 22px;
-  border-radius: var(--radius-full);
+  padding: 9px 20px;
+  border-radius: var(--radius-sm);
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
-  font-size: 0.92rem;
-  font-weight: 700;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .flow-tab-btn:hover {
-  border-color: var(--brand-teal);
+  border-color: var(--border-highlight);
   color: var(--text-primary);
-  transform: translateY(-1px);
 }
 
 .flow-tab-btn.active {
-  background: var(--accent-primary-soft);
-  border-color: var(--brand-teal);
-  color: var(--brand-teal);
-  box-shadow: 0 0 16px rgba(43, 168, 160, 0.25);
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #0b1726;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.flow-tab-btn.flow-tab-sim-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(116, 177, 187, 0.12);
+  border: 1.5px solid var(--accent-primary);
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+
+.flow-tab-btn.flow-tab-sim-link:hover {
+  background: var(--accent-primary);
+  color: #0b1726;
+  border-color: var(--accent-primary);
 }
 
 [data-theme="light"] .flow-tab-btn.active {
-  background: rgba(13, 148, 136, 0.12);
-  color: #0f766e;
-  border-color: #0f766e;
+  background: #1d3c62;
+  color: #ffffff;
+  border-color: #1d3c62;
+}
+
+[data-theme="light"] .flow-tab-btn.flow-tab-sim-link {
+  background: #ffffff;
+  border: 1.5px solid #1d3c62;
+  color: #1d3c62;
+}
+
+[data-theme="light"] .flow-tab-btn.flow-tab-sim-link:hover {
+  background: #1d3c62;
+  border-color: #1d3c62;
+  color: #ffffff;
+}
+
+/* Efecto de foco sutil al subir desde la consola (sin neón) */
+.flow-tab-selector.highlight-pulse {
+  animation: pulseTabsCorporate 1.8s ease-out;
+}
+
+@keyframes pulseTabsCorporate {
+  0% {
+    box-shadow: 0 0 0 0 rgba(29, 60, 98, 0.2);
+  }
+  40% {
+    box-shadow: 0 0 0 6px rgba(29, 60, 98, 0.15);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(29, 60, 98, 0);
+  }
 }
 
 /* Contenedor del SVG */
 .svg-flow-wrapper {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: 24px;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .svg-flow-container {
   width: 100%;
   overflow-x: auto;
-  padding: 10px 0;
+  padding: 14px 0 6px 0;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -66,94 +112,205 @@
   max-width: 920px;
   margin: 0 auto;
   display: block;
+  overflow: visible;
 }
 
-/* Líneas de conexión */
+/* ----------------------------------------------------
+   ATENUACIÓN DE NODOS FUERA DE LA RUTA ACTIVA
+   ---------------------------------------------------- */
+.interactive-flow-svg.has-selection .svg-node-group.dimmed {
+  opacity: 0.18 !important;
+  filter: grayscale(0.95) contrast(0.85) !important;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.interactive-flow-svg.has-selection .svg-node-group.dimmed:hover {
+  opacity: 0.75 !important;
+  filter: none !important;
+}
+
+/* NODOS INVOLUCRADOS EN LA RUTA ACTIVA: 100% VISIBLES */
+.svg-node-group.in-path {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Pasos previos de la ruta activa (ej: 1 y 2 cuando 3B está activo) */
+.svg-node-group.in-path:not(.selected) .svg-node-rect {
+  stroke-width: 2px;
+  stroke: var(--accent-primary);
+}
+
+[data-theme="light"] .svg-node-group.in-path:not(.selected) .svg-node-rect {
+  stroke: #1d3c62;
+}
+
+/* NODO SELECCIONADO / DESTINO ACTIVO (ej: 3B) */
+.svg-node-group.selected {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.svg-node-group.selected .svg-node-rect {
+  stroke: var(--accent-primary) !important;
+  stroke-width: 3.5px !important;
+  fill: var(--bg-card-elevated) !important;
+}
+
+[data-theme="light"] .svg-node-group.selected .svg-node-rect {
+  stroke: #1d3c62 !important;
+  fill: #f4f8fa !important;
+}
+
+.svg-node-group.selected .rect-warning {
+  stroke: #b45309 !important;
+}
+
+[data-theme="light"] .svg-node-group.selected .rect-warning {
+  stroke: #b45309 !important;
+  fill: #fffbeb !important;
+}
+
+/* Nodo de excepción (Caso Límite) cuando está seleccionado */
+.svg-node-group.selected .rect-human {
+  stroke: #b91c1c !important;
+  stroke-width: 3.5px !important;
+}
+
+[data-theme="light"] .svg-node-group.selected .rect-human {
+  stroke: #b91c1c !important;
+  fill: #fef2f2 !important;
+}
+
+/* ----------------------------------------------------
+   LÍNEAS DE CONEXIÓN ARQUITECTÓNICAS (SIN NEÓN NI LÁSER)
+   ---------------------------------------------------- */
 .svg-flow-line {
   stroke: var(--border-color);
-  stroke-width: 2.2;
+  stroke-width: 2;
   fill: none;
-  transition: stroke var(--transition-normal), stroke-width var(--transition-normal);
+  transition: stroke 0.2s ease, stroke-width 0.2s ease;
 }
 
+/* Líneas inactivas fuera de la ruta */
+.interactive-flow-svg.has-selection .svg-flow-line:not(.active) {
+  opacity: 0.18 !important;
+  stroke-width: 1.8px !important;
+}
+
+/* Línea activa sobria y limpia */
 .svg-flow-line.active {
-  stroke: var(--brand-teal);
-  stroke-width: 3.2;
-  filter: drop-shadow(0 0 5px rgba(43, 168, 160, 0.65));
+  stroke: var(--accent-primary) !important;
+  stroke-width: 2.8px !important;
+  stroke-dasharray: none !important;
+  animation: none !important;
+  filter: none !important;
+  opacity: 1 !important;
 }
 
 [data-theme="light"] .svg-flow-line.active {
-  stroke: #0d9488;
+  stroke: #1d3c62 !important;
 }
 
+.svg-flow-line.line-danger {
+  stroke: #b91c1c !important;
+  stroke-width: 3px !important;
+  stroke-dasharray: 6 3 !important;
+  animation: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+[data-theme="light"] .svg-flow-line.line-danger {
+  stroke: #b91c1c !important;
+}
+
+/* Rótulos de camino con halo técnico limpio */
 .svg-path-label {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.05em;
+  paint-order: stroke fill;
+  stroke: var(--bg-card);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  transition: opacity var(--transition-fast);
 }
 
-.svg-path-label.yes { fill: var(--accent-success); }
-.svg-path-label.no { fill: var(--accent-amber); }
+.svg-path-label.dimmed {
+  opacity: 0.18 !important;
+}
 
-/* Nodos SVG */
+.svg-path-label.yes { 
+  fill: #15803d; 
+}
+[data-theme="light"] .svg-path-label.yes { 
+  fill: #15803d; 
+}
+
+.svg-path-label.no { 
+  fill: #b45309; 
+}
+[data-theme="light"] .svg-path-label.no { 
+  fill: #b45309; 
+}
+
+/* Nodos base */
 .svg-node-group {
   cursor: pointer;
   outline: none;
-  transition: transform var(--transition-fast);
-}
-
-.svg-node-group:hover,
-.svg-node-group:focus-visible {
-  transform: translateY(-2px);
+  transition: opacity var(--transition-fast);
 }
 
 .svg-node-rect {
-  fill: var(--bg-card-elevated);
-  stroke: var(--border-color);
+  fill: var(--bg-card);
+  stroke: #cbd5e1;
   stroke-width: 1.5;
-  transition: stroke var(--transition-fast), filter var(--transition-fast);
+  transition: stroke var(--transition-fast);
 }
 
-.svg-node-group.selected .svg-node-rect {
-  stroke: var(--brand-teal);
-  stroke-width: 2.8;
-  filter: drop-shadow(0 0 10px rgba(43, 168, 160, 0.45));
-}
-
-[data-theme="light"] .svg-node-group.selected .svg-node-rect {
-  stroke: #0d9488;
-  filter: drop-shadow(0 0 8px rgba(13, 148, 136, 0.3));
+[data-theme="light"] .svg-node-rect {
+  fill: #ffffff;
+  stroke: #cbd5e1;
 }
 
 .rect-start {
-  stroke: var(--accent-cyan);
+  stroke: #5c6d77;
 }
 
 .rect-decision {
-  stroke: var(--accent-amber);
+  stroke: #c2782e;
 }
 
 .rect-action {
-  stroke: var(--brand-teal);
+  stroke: var(--accent-primary);
+}
+
+[data-theme="light"] .rect-action {
+  stroke: #1d3c62;
 }
 
 .rect-success {
-  stroke: var(--accent-success);
+  stroke: #15803d;
 }
 
 .rect-warning {
-  stroke: var(--accent-warning);
+  stroke: #b45309;
 }
 
 .rect-human {
-  stroke: var(--accent-danger);
-  fill: var(--accent-danger-soft);
+  stroke: #b91c1c;
+  fill: rgba(185, 28, 28, 0.05);
+}
+
+[data-theme="light"] .rect-human {
+  fill: #fef2f2;
 }
 
 .svg-node-tag {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
   fill: var(--text-muted);
   letter-spacing: 0.06em;
@@ -161,32 +318,247 @@
 
 .svg-node-title {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
   fill: var(--text-primary);
 }
 
+[data-theme="light"] .svg-node-title {
+  fill: #0f172a;
+}
+
 .svg-node-sub {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 10.5px;
+  font-weight: 500;
   fill: var(--text-muted);
 }
 
-.text-accent { fill: var(--brand-teal); }
-.text-warning { fill: var(--accent-amber); }
-.text-success { fill: var(--accent-success); }
-.text-danger { fill: var(--accent-danger); }
+.text-accent { fill: var(--accent-primary); }
+.text-warning { fill: #b45309; }
+.text-success { fill: #15803d; }
+.text-danger { fill: #b91c1c; }
 
-[data-theme="light"] .text-accent { fill: #0d9488; }
-[data-theme="light"] .text-warning { fill: #d97706; }
+[data-theme="light"] .text-accent { fill: #1d3c62; }
+[data-theme="light"] .text-warning { fill: #b45309; }
+[data-theme="light"] .text-success { fill: #15803d; }
+[data-theme="light"] .text-danger { fill: #b91c1c; }
 
-/* Tarjeta explicativa interactiva */
-.svg-selected-explainer {
-  background: var(--bg-page);
+/* ----------------------------------------------------
+   BADGE SOBRE EL NODO ACTIVO (ETIQUETA TÉCNICA PLANA)
+   ---------------------------------------------------- */
+.svg-active-badge-group {
+  pointer-events: none;
+}
+
+.badge-rect-active {
+  fill: #1d3c62;
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+[data-theme="light"] .badge-rect-active {
+  fill: #1d3c62;
+  stroke: #ffffff;
+}
+
+.badge-rect-danger {
+  fill: #b91c1c;
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+[data-theme="light"] .badge-rect-danger {
+  fill: #b91c1c;
+  stroke: #ffffff;
+}
+
+.badge-rect-success {
+  fill: #15803d;
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+[data-theme="light"] .badge-rect-success {
+  fill: #15803d;
+  stroke: #ffffff;
+}
+
+.badge-rect-warning {
+  fill: #b45309;
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+[data-theme="light"] .badge-rect-warning {
+  fill: #b45309;
+  stroke: #ffffff;
+}
+
+.badge-text-active {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  fill: #ffffff;
+  letter-spacing: 0.05em;
+}
+
+/* ----------------------------------------------------
+   RUTA DE EJECUCIÓN AGÉNTICA (BREADCRUMB PIPELINE CORPORATIVO)
+   ---------------------------------------------------- */
+.flow-breadcrumb-container {
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-left: 4px solid var(--brand-teal);
-  border-radius: var(--radius-md);
-  padding: 20px 24px;
+  border-radius: var(--radius-sm);
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+[data-theme="light"] .flow-breadcrumb-container {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.breadcrumb-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.breadcrumb-label-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+[data-theme="light"] .breadcrumb-label-tag {
+  color: #1d3c62;
+}
+
+.breadcrumb-step-count {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.breadcrumb-steps-track {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.breadcrumb-step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+}
+
+.breadcrumb-step-pill:hover {
+  border-color: var(--brand-navy);
+  color: var(--text-primary);
+}
+
+.breadcrumb-step-pill.completed {
+  background: rgba(21, 128, 61, 0.18);
+  border-color: rgba(21, 128, 61, 0.45);
+  color: #86efac;
+}
+
+[data-theme="light"] .breadcrumb-step-pill.completed {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+.breadcrumb-step-pill.active {
+  background: #1d3c62;
+  border-color: #1d3c62;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+[data-theme="light"] .breadcrumb-step-pill.active {
+  background: #1d3c62;
+  border-color: #1d3c62;
+  color: #ffffff;
+}
+
+.breadcrumb-step-pill.active.step-danger {
+  background: #b91c1c !important;
+  border-color: #b91c1c !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .breadcrumb-step-pill.active.step-danger {
+  background: #b91c1c !important;
+  border-color: #b91c1c !important;
+}
+
+.breadcrumb-step-pill.pending {
+  opacity: 0.45;
+}
+
+.step-now-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 2px;
+  letter-spacing: 0.04em;
+}
+
+.step-danger .step-now-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.breadcrumb-arrow {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.breadcrumb-arrow.completed-arrow {
+  color: var(--accent-primary);
+}
+
+[data-theme="light"] .breadcrumb-arrow.completed-arrow {
+  color: #1d3c62;
+}
+
+/* ----------------------------------------------------
+   TARJETA EXPLICATIVA INTERACTIVA DEL PASO
+   ---------------------------------------------------- */
+.svg-selected-explainer {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  padding: 18px 22px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -195,7 +567,9 @@
 }
 
 [data-theme="light"] .svg-selected-explainer {
-  border-left-color: #0d9488;
+  background: #ffffff;
+  border-color: #e2e8f0;
+  border-left-color: #1d3c62;
 }
 
 .explainer-header {
@@ -207,31 +581,78 @@
 }
 
 .explainer-actor {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-family: var(--font-mono);
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
 .explainer-title {
   font-family: var(--font-heading);
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--text-primary);
 }
 
+[data-theme="light"] .explainer-title {
+  color: #0f172a;
+}
+
 .explainer-desc {
-  font-size: 0.96rem;
+  font-size: 0.94rem;
   color: var(--text-secondary);
   line-height: 1.55;
 }
 
 .explainer-hint {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
   font-family: var(--font-mono);
-  margin-top: 4px;
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.explainer-action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-down-to-sim {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(116, 177, 187, 0.12);
+  border: 1.5px solid var(--accent-primary);
+  color: var(--accent-primary);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-down-to-sim:hover {
+  background: var(--accent-primary);
+  color: #0b1726;
+  border-color: var(--accent-primary);
+}
+
+[data-theme="light"] .btn-down-to-sim {
+  background: #ffffff;
+  color: #1d3c62;
+  border: 1.5px solid #1d3c62;
+}
+
+[data-theme="light"] .btn-down-to-sim:hover {
+  background: #1d3c62;
+  color: #ffffff;
 }

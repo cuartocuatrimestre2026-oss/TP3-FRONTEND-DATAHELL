@@ -9,11 +9,54 @@ import { AccordionDetails } from './components/AccordionDetails';
 import { TeamSection } from './components/TeamSection';
 import { BotonSubir } from './components/BotonSubir';
 import { Footer } from './components/Footer';
-import { Sparkles, Compass, Sliders, Layers } from 'lucide-react';
+import { Sparkles, Compass, Sliders, Layers, ArrowDown } from 'lucide-react';
 
 export function App() {
   const [activeFlowTab, setActiveFlowTab] = useState('r5');
   const [selectedSvgNode, setSelectedSvgNode] = useState('r5-decision');
+  const [highlightFlowTabs, setHighlightFlowTabs] = useState(false);
+  const [highlightSimulator, setHighlightSimulator] = useState(false);
+
+  // Scroll suave con offset directo al recuadro del diagrama (Foto 2)
+  const scrollToDiagramFlowBox = () => {
+    const target = document.getElementById('diagrama-flujo-anchor') || document.getElementById('diagramas');
+    if (target) {
+      const headerOffset = 76;
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Bajar a la consola de interacción agéntica mostrando directamente la tarjeta blanca
+  const handleScrollToSimulator = () => {
+    const target = document.getElementById('simulador-card-anchor') || document.getElementById('simulador');
+    if (target) {
+      const headerOffset = 76;
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      setHighlightSimulator(true);
+      setTimeout(() => setHighlightSimulator(false), 2400);
+    }
+  };
+
+  // Subir al diagrama de flujo (opcionalmente cambiando al flujo deseado)
+  const handleScrollToDiagram = (targetFlow) => {
+    if (targetFlow) {
+      setActiveFlowTab(targetFlow);
+      setSelectedSvgNode(targetFlow === 'r5' ? 'r5-decision' : 'r6-decision-dual');
+    }
+    scrollToDiagramFlowBox();
+    setHighlightFlowTabs(true);
+    setTimeout(() => setHighlightFlowTabs(false), 2400);
+  };
 
   const handleHighlightSvgNode = (nodeId) => {
     if (nodeId.startsWith('r5')) {
@@ -23,11 +66,8 @@ export function App() {
     }
     setSelectedSvgNode(nodeId);
 
-    // Scroll suave al diagrama para ver el efecto visual
-    const el = document.getElementById('diagramas');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Scroll suave directo al recuadro del diagrama (Foto 2)
+    scrollToDiagramFlowBox();
   };
 
   return (
@@ -71,7 +111,11 @@ export function App() {
               </div>
 
               {/* Selector de Flujo */}
-              <div className="flow-tab-selector" role="tablist">
+              <div 
+                id="diagrama-flujo-anchor"
+                className={`flow-tab-selector ${highlightFlowTabs ? 'highlight-pulse' : ''}`} 
+                role="tablist"
+              >
                 <button
                   type="button"
                   role="tab"
@@ -96,12 +140,24 @@ export function App() {
                 >
                   Flujo R6: Modificación en Caliente (Consenso Dual)
                 </button>
+                <button
+                  type="button"
+                  className="flow-tab-btn flow-tab-sim-link"
+                  onClick={handleScrollToSimulator}
+                  title="Bajar directamente a la consola de pedidos"
+                  aria-label="Bajar a la Consola de Simulación"
+                >
+                  <Sliders size={14} aria-hidden="true" />
+                  <span>Bajar a Consola</span>
+                  <ArrowDown size={13} aria-hidden="true" />
+                </button>
               </div>
 
               <InteractiveSvgFlow
                 activeFlow={activeFlowTab}
                 selectedNodeId={selectedSvgNode}
                 onSelectNode={(nodeId) => setSelectedSvgNode(nodeId)}
+                onReturnToSimulator={handleScrollToSimulator}
               />
             </div>
           </section>
@@ -122,7 +178,12 @@ export function App() {
                 </p>
               </div>
 
-              <CruiseOrderSimulator onHighlightSvgNode={handleHighlightSvgNode} />
+              <CruiseOrderSimulator 
+                onHighlightSvgNode={handleHighlightSvgNode} 
+                onScrollToDiagram={handleScrollToDiagram}
+                currentFlow={activeFlowTab}
+                isHighlighted={highlightSimulator}
+              />
             </div>
           </section>
 

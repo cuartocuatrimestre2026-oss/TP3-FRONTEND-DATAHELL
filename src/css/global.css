@@ -1,125 +1,138 @@
 :root {
   /* ========================================================
-     TAP2ORDER × DATAHELL DESIGN SYSTEM · MODO OSCURO (DEEP OCEAN)
-     Paleta extraída del logotipo oficial de Tap2Order
+     TAP2ORDER × DATAHELL CORPORATE DESIGN SYSTEM (PALETA OFICIAL DEL LOGO)
+     Colores extraídos directamente de tap2order-logo.png
      ======================================================== */
-  --brand-navy: #1b3b64;
-  --brand-navy-dark: #102035;
-  --brand-navy-midnight: #0a1524;
-  --brand-teal: #2ba8a0;
-  --brand-teal-bright: #35bfb6;
-  --brand-amber: #f39c42;
-  --brand-amber-warm: #fbbf24;
+  --brand-navy: #1d3c62;           /* Azul Marino Naval Oficial del Logo */
+  --brand-navy-dark: #12263f;      /* Marino Profundo */
+  --brand-navy-midnight: #0b1726;  /* Noche de Crucero */
+  --brand-sea-teal: #74b1bb;       /* Verde Agua Pizarra Oficial del Logo */
+  --brand-teal: #74b1bb;           /* Aliased para compatibilidad */
+  --brand-slate: #5c6d77;          /* Gris Pizarra Oficial del Logo */
+  --brand-sand: #e0d6c6;           /* Arena Cálida / Lino Oficial del Logo */
+  --brand-amber: #c2782e;          /* Ámbar Gastronómico Cálido (sin flúor) */
 
-  /* Fondos de interfaz (Noche en Alta Mar) */
-  --bg-page: #0a1524;
-  --bg-card: #102035;
-  --bg-card-elevated: #162d4a;
-  --bg-card-glass: rgba(16, 32, 53, 0.88);
+  /* Fondos de interfaz Modo Oscuro (Marino Ejecutivo) */
+  --bg-page: #0b1726;
+  --bg-card: #12263f;
+  --bg-card-elevated: #18314e;
+  --bg-card-glass: rgba(18, 38, 63, 0.92);
   
-  --header-bg: rgba(10, 21, 36, 0.92);
-  --footer-bg: #070e18;
+  --header-bg: rgba(11, 23, 38, 0.94);
+  --footer-bg: #070f1a;
 
-  /* Textos WCAG AAA sobre fondos oceánicos oscuros (>12:1) */
-  --text-primary: #f8fafc;       /* Ratio de contraste > 15:1 */
-  --text-secondary: #cbd5e1;     /* Ratio de contraste > 10:1 */
-  --text-muted: #94a3b8;         /* Ratio de contraste > 7.2:1 */
+  /* Textos de Alto Contraste */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
 
-  /* Acentos y estados dinámicos */
-  --accent-primary: #2ba8a0;     /* Turquesa marino Tap2Order */
-  --accent-primary-hover: #35bfb6;
-  --accent-primary-soft: rgba(43, 168, 160, 0.16);
-  --accent-primary-glow: rgba(43, 168, 160, 0.35);
+  /* Acentos Institucionales */
+  --accent-primary: #74b1bb;
+  --accent-primary-hover: #8fc2cb;
+  --accent-primary-soft: rgba(116, 177, 187, 0.14);
 
-  --accent-amber: #f39c42;       /* Ámbar gastronómico de campana / calor de cocina */
-  --accent-amber-hover: #e08a32;
-  --accent-amber-soft: rgba(243, 156, 66, 0.18);
+  --accent-amber: #c2782e;
+  --accent-amber-hover: #a86422;
+  --accent-amber-soft: rgba(194, 120, 46, 0.16);
 
-  --accent-cyan: #06b6d4;        /* Cyan onda de agua satelital */
-  --accent-cyan-soft: rgba(6, 182, 212, 0.15);
+  --accent-cyan: #74b1bb;
+  --accent-cyan-soft: rgba(116, 177, 187, 0.12);
 
-  --accent-success: #10b981;     /* Esmeralda recepción confirmada */
-  --accent-success-soft: rgba(16, 185, 129, 0.16);
+  --accent-success: #22c55e;       /* Verde accesible en fondo oscuro */
+  --accent-success-soft: rgba(34, 197, 94, 0.15);
 
-  --accent-warning: #f59e0b;     /* Ámbar pausa / retención preventiva */
-  --accent-warning-soft: rgba(245, 158, 11, 0.16);
+  --accent-warning: #f59e0b;       /* Ámbar accesible en fondo oscuro */
+  --accent-warning-soft: rgba(245, 158, 11, 0.15);
 
-  --accent-danger: #ef4444;      /* Coral excepción de red satelital */
-  --accent-danger-soft: rgba(239, 68, 68, 0.16);
+  --accent-danger: #f87171;        /* Rojo accesible en fondo oscuro */
+  --accent-danger-soft: rgba(248, 113, 113, 0.15);
 
-  /* Bordes y sombras marinas */
+  /* Bordes y sombras físicas naturales (CERO NEÓN) */
   --border-color: rgba(255, 255, 255, 0.12);
-  --border-highlight: rgba(43, 168, 160, 0.5);
-  --border-amber: rgba(243, 156, 66, 0.45);
+  --border-highlight: rgba(116, 177, 187, 0.45);
+  --border-amber: rgba(194, 120, 46, 0.35);
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
-  --shadow-teal-glow: 0 0 24px rgba(43, 168, 160, 0.25);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.45);
+  --shadow-teal-glow: 0 4px 12px rgba(116, 177, 187, 0.15);
 
-  /* Tipografías Modernas */
+  /* Scrollbar Corporativo Alto Contraste */
+  --scrollbar-track: #070f1a;
+  --scrollbar-thumb: #233b5d;
+  --scrollbar-thumb-hover: #74b1bb;
+
+  /* Tipografías Profesionales */
   --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 18px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
   --radius-full: 9999px;
 
-  --transition-fast: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-normal: 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.16s ease;
+  --transition-normal: 0.24s ease;
 }
 
 [data-theme="light"] {
   /* ========================================================
-     TAP2ORDER DESIGN SYSTEM · MODO CLARO (BRISA MARINA & CUBIERTA)
+     MODO CLARO CORPORATIVO (ESTILO STRIPE / NAVAL POS)
      ======================================================== */
-  --bg-page: #f4f8f9;            /* Brisa marina suave y limpia */
-  --bg-card: #ffffff;            /* Blanco inmaculado de cubierta */
-  --bg-card-elevated: #eaf1f5;   /* Gris azulado náutico suave */
-  --bg-card-glass: rgba(255, 255, 255, 0.92);
+  --bg-page: #f8fafc;            /* Gris perla ejecutivo ultra limpio */
+  --bg-card: #ffffff;            /* Blanco puro inmaculado */
+  --bg-card-elevated: #f1f5f9;   /* Pizarra clara */
+  --bg-card-glass: rgba(255, 255, 255, 0.96);
   
-  --header-bg: rgba(244, 248, 249, 0.94);
-  --footer-bg: #e1ebef;
+  --header-bg: rgba(248, 250, 252, 0.95);
+  --footer-bg: #e2e8f0;
 
-  /* Textos WCAG AAA sobre fondos claros náuticos (>13:1) */
-  --text-primary: #0e1f36;       /* Azul marino profundo > 15:1 */
-  --text-secondary: #1e3352;     /* Marino intermedio > 10:1 */
-  --text-muted: #475e7a;         /* Gris azulado de alto contraste > 7.1:1 */
+  /* Textos Ejecutivos */
+  --text-primary: #0f172a;       /* Slate 900 */
+  --text-secondary: #334155;     /* Slate 700 */
+  --text-muted: #64748b;         /* Slate 500 */
 
-  --accent-primary: #1b3b64;     /* Azul Marino Tap2Order para botones y estructura */
-  --accent-primary-hover: #122846;
-  --accent-primary-soft: rgba(27, 59, 100, 0.1);
-  --accent-primary-glow: rgba(27, 59, 100, 0.2);
+  /* Acentos Basados en el Logo */
+  --accent-primary: #1d3c62;     /* Azul Marino Naval del Logo */
+  --accent-primary-hover: #142b47;
+  --accent-primary-soft: rgba(29, 60, 98, 0.08);
 
-  --accent-teal: #0d9488;        /* Turquesa intenso con excelente contraste */
-  --accent-teal-soft: rgba(13, 148, 136, 0.12);
+  --accent-teal: #3d7580;        /* Sea Teal legible sobre fondos claros */
+  --accent-teal-soft: rgba(116, 177, 187, 0.16);
 
-  --accent-amber: #d97706;       /* Ámbar tostado legible en fondos blancos */
-  --accent-amber-hover: #b45309;
-  --accent-amber-soft: rgba(217, 119, 6, 0.14);
+  --brand-teal: #3d7580;
 
-  --accent-cyan: #0284c7;
-  --accent-cyan-soft: rgba(2, 132, 199, 0.12);
+  --accent-amber: #b45309;
+  --accent-amber-hover: #92400e;
+  --accent-amber-soft: rgba(180, 83, 9, 0.1);
 
-  --accent-success: #059669;
-  --accent-success-soft: rgba(5, 150, 105, 0.12);
+  --accent-cyan: #1d3c62;
+  --accent-cyan-soft: rgba(29, 60, 98, 0.08);
+
+  --accent-success: #15803d;
+  --accent-success-soft: rgba(21, 128, 61, 0.1);
 
   --accent-warning: #b45309;
-  --accent-warning-soft: rgba(180, 83, 9, 0.12);
+  --accent-warning-soft: rgba(180, 83, 9, 0.1);
 
-  --accent-danger: #dc2626;
-  --accent-danger-soft: rgba(220, 38, 38, 0.12);
+  --accent-danger: #b91c1c;
+  --accent-danger-soft: rgba(185, 28, 28, 0.1);
 
-  --border-color: rgba(27, 59, 100, 0.14);
-  --border-highlight: rgba(43, 168, 160, 0.55);
-  --border-amber: rgba(217, 119, 6, 0.4);
+  --border-color: #e2e8f0;
+  --border-highlight: rgba(29, 60, 98, 0.35);
+  --border-amber: rgba(180, 83, 9, 0.25);
 
-  --shadow-sm: 0 2px 8px rgba(27, 59, 100, 0.06);
-  --shadow-md: 0 8px 24px rgba(27, 59, 100, 0.09);
-  --shadow-lg: 0 16px 40px rgba(27, 59, 100, 0.14);
-  --shadow-teal-glow: 0 0 24px rgba(43, 168, 160, 0.18);
+  /* Sombras Físicas Sutiles (CERO NEÓN) */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.09);
+  --shadow-teal-glow: 0 2px 8px rgba(29, 60, 98, 0.06);
+
+  /* Scrollbar Corporativo Alto Contraste */
+  --scrollbar-track: #e2e8f0;
+  --scrollbar-thumb: #5c6d77;        /* Gris pizarra oficial del logo: visible y nítido */
+  --scrollbar-thumb-hover: #1d3c62;  /* Azul marino naval oficial del logo */
 }
 
 /* ========================================================
@@ -257,9 +270,9 @@ button {
 }
 
 [data-theme="light"] .section-tag {
-  background: rgba(43, 168, 160, 0.12);
-  color: #0f766e;
-  border-color: rgba(15, 118, 110, 0.3);
+  background: rgba(29, 60, 98, 0.08);
+  color: #1d3c62;
+  border-color: rgba(29, 60, 98, 0.25);
 }
 
 .section-heading {
@@ -304,21 +317,34 @@ button {
   color: var(--accent-amber);
 }
 
-/* Utilidad de scrollbar elegante */
+/* ========================================================
+   BARRA DE DESPLAZAMIENTO (SCROLLBAR) DE ALTO CONTRASTE
+   Accesibilidad universal WCAG 2.1: visible tanto en Chrome/Edge como en Firefox
+   ======================================================== */
+html, * {
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-page);
+  background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 5px;
+  background: var(--scrollbar-thumb);
+  border-radius: 6px;
+  border: 2.5px solid var(--scrollbar-track); /* Da respiro y destaque al thumb */
+  transition: background-color var(--transition-fast);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-primary);
+  background: var(--scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--brand-navy);
 }

@@ -36,14 +36,16 @@ export const BotonSubir = () => {
         bottom: '24px',
         right: '24px',
         zIndex: 999,
-        background: 'var(--accent-primary)',
+        background: 'var(--brand-navy)',
         color: '#ffffff',
         boxShadow: 'var(--shadow-md)',
-        border: 'none',
-        padding: '12px 16px',
+        border: '1px solid var(--border-highlight)',
+        borderRadius: 'var(--radius-full)',
+        padding: '10px 18px',
         display: 'inline-flex',
         alignItems: 'center',
-        gap: '6px'
+        gap: '6px',
+        cursor: 'pointer'
       }}
       aria-label="Volver al inicio de la página"
       title="Volver arriba"

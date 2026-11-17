@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { mockPlatosCrucero } from '../data/tap2order_data';
 import { 
   Ship, 
@@ -10,12 +10,25 @@ import {
   Clock, 
   UserCheck, 
   Cpu,
-  RefreshCw
+  RefreshCw,
+  ArrowUp
 } from 'lucide-react';
 
-export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
-  const [activeTab, setActiveTab] = useState('r5');
+export const CruiseOrderSimulator = ({ 
+  onHighlightSvgNode, 
+  onScrollToDiagram,
+  currentFlow = 'r5',
+  isHighlighted = false
+}) => {
+  const [activeTab, setActiveTab] = useState(currentFlow);
   const [selectedPlato, setSelectedPlato] = useState(mockPlatosCrucero[0].id);
+
+  // Sincronizar si cambia desde afuera
+  useEffect(() => {
+    if (currentFlow) {
+      setActiveTab(currentFlow);
+    }
+  }, [currentFlow]);
 
   // Estados para R5 (Aviso)
   const [r5Listo, setR5Listo] = useState(true);
@@ -33,6 +46,18 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
 
   // Cálculo de resultado para R5
   const getR5Result = () => {
+    // 1. CASO LÍMITE R5: Falla de Red Satelital en Alta Mar (Prioridad Excepción)
+    if (r5FallaSatelital) {
+      return {
+        nodoSvg: 'r5-exception',
+        estadoBadge: '🚨 Timeout Satelital (>15s)',
+        badgeColor: 'danger',
+        mensaje: 'Sin acuse de recibo del gateway satelital tras 2 reintentos (>15s). El agente cancela reintentos y deriva a la tablet del Cabin Host.',
+        ticketStatus: 'TIMEOUT SATELITAL · CABIN HOST',
+        accion: 'Cabin Host acude al camarote para notificación verbal presencial.'
+      };
+    }
+    // 2. Cocina en proceso
     if (!r5Listo) {
       return {
         nodoSvg: 'r5-decision',
@@ -43,6 +68,7 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
         accion: 'Ninguna (esperando evento de cocina).'
       };
     }
+    // 3. Modificación pendiente
     if (r5CambioPendiente) {
       return {
         nodoSvg: 'r5-action-hold',
@@ -53,26 +79,18 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
         accion: 'Retención preventiva en base de datos.'
       };
     }
+    // 4. Aviso ya enviado
     if (r5AvisoEnviado) {
       return {
         nodoSvg: 'r5-end-hold',
-        estadoBadge: 'Aviso ya Enviado',
+        estadoBadge: 'Aviso ya Despachado',
         badgeColor: 'warning',
         mensaje: 'El aviso ya fue emitido o está en curso. El agente bloquea duplicados para no molestar al huésped.',
         ticketStatus: 'YA NOTIFICADO',
         accion: 'Bloqueo de idempotencia (cero spam).'
       };
     }
-    if (r5FallaSatelital) {
-      return {
-        nodoSvg: 'r5-exception',
-        estadoBadge: 'Timeout de Red Satelital',
-        badgeColor: 'danger',
-        mensaje: 'El gateway marítimo no respondió tras 2 reintentos. El agente alertó a la tablet del Cabin Host.',
-        ticketStatus: 'ESCALADO PRESENCIAL',
-        accion: 'Cabin Host acude al camarote para aviso verbal en mano.'
-      };
-    }
+    // 5. Flujo normal exitoso
     return {
       nodoSvg: 'r5-end-success',
       estadoBadge: 'Aviso Enviado con Éxito',
@@ -85,16 +103,18 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
 
   // Cálculo de resultado para R6
   const getR6Result = () => {
+    // 1. CASO LÍMITE R6: Plato en bandeja de salida express (Sous Chef)
     if (r6PlatoEnSalidaExpress) {
       return {
         nodoSvg: 'r6-exception',
-        estadoBadge: 'Conflicto en Carrito de Salida',
+        estadoBadge: '🚨 Conflicto en Bandeja de Salida',
         badgeColor: 'danger',
-        mensaje: 'El huésped pidió cambio pero el plato ya salía en el carrito del camarero. Alarma sonora de HOLD.',
-        ticketStatus: 'HOLD EXPRESS',
-        accion: 'Intervención presencial del Sous Chef para autorizar cambio o compensar.'
+        mensaje: 'El huésped solicitó cambio pero el plato ya estaba en la bandeja de salida del mozo. El agente dispara alarma sonora de HOLD en cocina y pase.',
+        ticketStatus: 'HOLD EXPRESS · ARBITRAJE CHEF',
+        accion: 'Sous Chef interviene presencialmente para autorizar cambio o compensar.'
       };
     }
+    // 2. Consenso dual
     if (r6AprobacionCocina && r6ConfirmaPasajero) {
       return {
         nodoSvg: 'r6-end-success',
@@ -105,6 +125,7 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
         accion: 'Exige nueva confirmación de cocina antes de volver a marcar lista.'
       };
     }
+    // 3. Modificación cancelada / rechazo
     return {
       nodoSvg: 'r6-action-cancel',
       estadoBadge: 'Modificación Cancelada',
@@ -119,26 +140,26 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
 
   const resultadoActual = activeTab === 'r5' ? getR5Result() : getR6Result();
 
-  // Presets rápidos de 1 clic
+  // Presets rápidos de 1 clic (actualizan la consola sin scroll forzado)
   const aplicarPresetR5 = (caso) => {
     if (caso === 'exito') {
       setR5Listo(true);
       setR5CambioPendiente(false);
       setR5AvisoEnviado(false);
       setR5FallaSatelital(false);
-      if (onHighlightSvgNode) onHighlightSvgNode('r5-end-success');
+      if (onHighlightSvgNode) onHighlightSvgNode('r5-end-success', false);
     } else if (caso === 'cambio') {
       setR5Listo(true);
       setR5CambioPendiente(true);
       setR5AvisoEnviado(false);
       setR5FallaSatelital(false);
-      if (onHighlightSvgNode) onHighlightSvgNode('r5-action-hold');
+      if (onHighlightSvgNode) onHighlightSvgNode('r5-action-hold', false);
     } else if (caso === 'timeout') {
       setR5Listo(true);
       setR5CambioPendiente(false);
       setR5AvisoEnviado(false);
       setR5FallaSatelital(true);
-      if (onHighlightSvgNode) onHighlightSvgNode('r5-exception');
+      if (onHighlightSvgNode) onHighlightSvgNode('r5-exception', false);
     }
   };
 
@@ -147,53 +168,68 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
       setR6AprobacionCocina(true);
       setR6ConfirmaPasajero(true);
       setR6PlatoEnSalidaExpress(false);
-      if (onHighlightSvgNode) onHighlightSvgNode('r6-end-success');
+      if (onHighlightSvgNode) onHighlightSvgNode('r6-end-success', false);
     } else if (caso === 'rechazo') {
       setR6AprobacionCocina(false);
       setR6ConfirmaPasajero(true);
       setR6PlatoEnSalidaExpress(false);
-      if (onHighlightSvgNode) onHighlightSvgNode('r6-action-cancel');
+      if (onHighlightSvgNode) onHighlightSvgNode('r6-action-cancel', false);
     } else if (caso === 'salida') {
       setR6AprobacionCocina(true);
       setR6ConfirmaPasajero(true);
       setR6PlatoEnSalidaExpress(true);
-      if (onHighlightSvgNode) onHighlightSvgNode('r6-exception');
+      if (onHighlightSvgNode) onHighlightSvgNode('r6-exception', false);
     }
   };
 
   return (
-    <div className="cruise-simulator-card">
+    <div id="simulador-card-anchor" className={`cruise-simulator-card ${isHighlighted ? 'highlight-focus' : ''}`}>
       <div className="sim-top-nav">
         <div className="sim-brand-title">
           <Ship size={18} className="text-accent" aria-hidden="true" />
           <span>Consola Agéntica Tap2Order · Cruceros</span>
         </div>
 
-        <div className="sim-mode-tabs" role="tablist">
-          <button 
-            type="button" 
-            role="tab"
-            aria-selected={activeTab === 'r5'}
-            className={`sim-tab-pill ${activeTab === 'r5' ? 'active' : ''}`}
-            onClick={() => {
-              setActiveTab('r5');
-              if (onHighlightSvgNode) onHighlightSvgNode('r5-decision');
-            }}
-          >
-            Flujo R5: Aviso de Listo
-          </button>
-          <button 
-            type="button" 
-            role="tab"
-            aria-selected={activeTab === 'r6'}
-            className={`sim-tab-pill ${activeTab === 'r6' ? 'active' : ''}`}
-            onClick={() => {
-              setActiveTab('r6');
-              if (onHighlightSvgNode) onHighlightSvgNode('r6-decision-dual');
-            }}
-          >
-            Flujo R6: Modificación
-          </button>
+        <div className="sim-nav-actions">
+          <div className="sim-mode-tabs" role="tablist">
+            <button 
+              type="button" 
+              role="tab"
+              aria-selected={activeTab === 'r5'}
+              className={`sim-tab-pill ${activeTab === 'r5' ? 'active' : ''}`}
+              onClick={() => {
+                setActiveTab('r5');
+                if (onHighlightSvgNode) onHighlightSvgNode('r5-decision', false);
+              }}
+            >
+              Flujo R5: Aviso de Listo
+            </button>
+            <button 
+              type="button" 
+              role="tab"
+              aria-selected={activeTab === 'r6'}
+              className={`sim-tab-pill ${activeTab === 'r6' ? 'active' : ''}`}
+              onClick={() => {
+                setActiveTab('r6');
+                if (onHighlightSvgNode) onHighlightSvgNode('r6-decision-dual', false);
+              }}
+            >
+              Flujo R6: Modificación
+            </button>
+          </div>
+
+          {onScrollToDiagram && (
+            <button
+              type="button"
+              className="btn-sim-to-flow"
+              onClick={() => onScrollToDiagram()}
+              title="Subir al Diagrama de Flujo"
+              aria-label="Subir al Diagrama de Flujo"
+            >
+              <ArrowUp size={14} aria-hidden="true" />
+              <span>Subir al Flujo</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -228,8 +264,15 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
                     type="checkbox" 
                     checked={r5Listo} 
                     onChange={e => {
-                      setR5Listo(e.target.checked);
-                      if (onHighlightSvgNode) onHighlightSvgNode('r5-decision');
+                      const val = e.target.checked;
+                      setR5Listo(val);
+                      if (onHighlightSvgNode) {
+                        if (r5FallaSatelital) onHighlightSvgNode('r5-exception');
+                        else if (!val) onHighlightSvgNode('r5-decision');
+                        else if (r5CambioPendiente) onHighlightSvgNode('r5-action-hold');
+                        else if (r5AvisoEnviado) onHighlightSvgNode('r5-end-hold');
+                        else onHighlightSvgNode('r5-end-success');
+                      }
                     }}
                   />
                 </label>
@@ -240,8 +283,15 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
                     type="checkbox" 
                     checked={r5CambioPendiente} 
                     onChange={e => {
-                      setR5CambioPendiente(e.target.checked);
-                      if (onHighlightSvgNode) onHighlightSvgNode(e.target.checked ? 'r5-action-hold' : 'r5-decision');
+                      const val = e.target.checked;
+                      setR5CambioPendiente(val);
+                      if (onHighlightSvgNode) {
+                        if (r5FallaSatelital) onHighlightSvgNode('r5-exception');
+                        else if (val) onHighlightSvgNode('r5-action-hold');
+                        else if (!r5Listo) onHighlightSvgNode('r5-decision');
+                        else if (r5AvisoEnviado) onHighlightSvgNode('r5-end-hold');
+                        else onHighlightSvgNode('r5-end-success');
+                      }
                     }}
                   />
                 </label>
@@ -252,8 +302,15 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
                     type="checkbox" 
                     checked={r5AvisoEnviado} 
                     onChange={e => {
-                      setR5AvisoEnviado(e.target.checked);
-                      if (onHighlightSvgNode) onHighlightSvgNode(e.target.checked ? 'r5-end-hold' : 'r5-decision');
+                      const val = e.target.checked;
+                      setR5AvisoEnviado(val);
+                      if (onHighlightSvgNode) {
+                        if (r5FallaSatelital) onHighlightSvgNode('r5-exception');
+                        else if (val) onHighlightSvgNode('r5-end-hold');
+                        else if (!r5Listo) onHighlightSvgNode('r5-decision');
+                        else if (r5CambioPendiente) onHighlightSvgNode('r5-action-hold');
+                        else onHighlightSvgNode('r5-end-success');
+                      }
                     }}
                   />
                 </label>
@@ -264,8 +321,15 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
                     type="checkbox" 
                     checked={r5FallaSatelital} 
                     onChange={e => {
-                      setR5FallaSatelital(e.target.checked);
-                      if (onHighlightSvgNode) onHighlightSvgNode(e.target.checked ? 'r5-exception' : 'r5-decision');
+                      const val = e.target.checked;
+                      setR5FallaSatelital(val);
+                      if (onHighlightSvgNode) {
+                        if (val) onHighlightSvgNode('r5-exception');
+                        else if (!r5Listo) onHighlightSvgNode('r5-decision');
+                        else if (r5CambioPendiente) onHighlightSvgNode('r5-action-hold');
+                        else if (r5AvisoEnviado) onHighlightSvgNode('r5-end-hold');
+                        else onHighlightSvgNode('r5-end-success');
+                      }
                     }}
                   />
                 </label>
@@ -291,8 +355,13 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
                     type="checkbox" 
                     checked={r6AprobacionCocina} 
                     onChange={e => {
-                      setR6AprobacionCocina(e.target.checked);
-                      if (onHighlightSvgNode) onHighlightSvgNode('r6-decision-dual');
+                      const val = e.target.checked;
+                      setR6AprobacionCocina(val);
+                      if (onHighlightSvgNode) {
+                        if (r6PlatoEnSalidaExpress) onHighlightSvgNode('r6-exception');
+                        else if (val && r6ConfirmaPasajero) onHighlightSvgNode('r6-end-success');
+                        else onHighlightSvgNode('r6-action-cancel');
+                      }
                     }}
                   />
                 </label>
@@ -303,8 +372,13 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
                     type="checkbox" 
                     checked={r6ConfirmaPasajero} 
                     onChange={e => {
-                      setR6ConfirmaPasajero(e.target.checked);
-                      if (onHighlightSvgNode) onHighlightSvgNode('r6-decision-dual');
+                      const val = e.target.checked;
+                      setR6ConfirmaPasajero(val);
+                      if (onHighlightSvgNode) {
+                        if (r6PlatoEnSalidaExpress) onHighlightSvgNode('r6-exception');
+                        else if (r6AprobacionCocina && val) onHighlightSvgNode('r6-end-success');
+                        else onHighlightSvgNode('r6-action-cancel');
+                      }
                     }}
                   />
                 </label>
@@ -315,8 +389,13 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
                     type="checkbox" 
                     checked={r6PlatoEnSalidaExpress} 
                     onChange={e => {
-                      setR6PlatoEnSalidaExpress(e.target.checked);
-                      if (onHighlightSvgNode) onHighlightSvgNode(e.target.checked ? 'r6-exception' : 'r6-decision-dual');
+                      const val = e.target.checked;
+                      setR6PlatoEnSalidaExpress(val);
+                      if (onHighlightSvgNode) {
+                        if (val) onHighlightSvgNode('r6-exception');
+                        else if (r6AprobacionCocina && r6ConfirmaPasajero) onHighlightSvgNode('r6-end-success');
+                        else onHighlightSvgNode('r6-action-cancel');
+                      }
                     }}
                   />
                 </label>
@@ -378,12 +457,28 @@ export const CruiseOrderSimulator = ({ onHighlightSvgNode }) => {
                 type="button" 
                 className="btn-sync-svg"
                 onClick={() => {
-                  if (onHighlightSvgNode) onHighlightSvgNode(resultadoActual.nodoSvg);
+                  if (onHighlightSvgNode) onHighlightSvgNode(resultadoActual.nodoSvg, true);
                 }}
+                title="Subir al diagrama para resaltar este paso exacto"
               >
                 <RefreshCw size={13} aria-hidden="true" />
-                Resaltar Paso en el Diagrama SVG
+                <span>Resaltar Paso en Diagrama</span>
               </button>
+
+              {onScrollToDiagram && (
+                <button 
+                  type="button" 
+                  className="btn-switch-flow-up"
+                  onClick={() => {
+                    const otroFlujo = activeTab === 'r5' ? 'r6' : 'r5';
+                    onScrollToDiagram(otroFlujo);
+                  }}
+                  title={`Subir al diagrama y elegir Flujo ${activeTab === 'r5' ? 'R6 (Modificación)' : 'R5 (Aviso de Listo)'}`}
+                >
+                  <ArrowUp size={14} aria-hidden="true" />
+                  <span>Subir y Elegir {activeTab === 'r5' ? 'Flujo R6 (Modificación)' : 'Flujo R5 (Aviso)'}</span>
+                </button>
+              )}
             </div>
           </div>
         </div>

@@ -31,12 +31,17 @@
   font-family: var(--font-mono);
   font-size: 0.82rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #0b1726;
   background: var(--accent-primary);
   padding: 6px 14px;
   border-radius: var(--radius-sm);
   display: inline-block;
   letter-spacing: 0.05em;
+}
+
+[data-theme="light"] .proposal-code-badge {
+  color: #ffffff;
+  background: #1d3c62;
 }
 
 .proposal-category {

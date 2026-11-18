@@ -1,0 +1,874 @@
+/* ========================================================
+   DIAGRAMA SVG INTERACTIVO TAP2ORDER (DISEÑO CORPORATIVO LOGO)
+   ======================================================== */
+
+.flow-tab-selector {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  scroll-margin-top: 76px;
+}
+
+.flow-tab-btn {
+  padding: 9px 20px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.flow-tab-btn:hover {
+  border-color: var(--border-highlight);
+  color: var(--text-primary);
+}
+
+.flow-tab-btn.active {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #0b1726;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.flow-tab-btn.flow-tab-sim-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.flow-tab-btn.flow-tab-sim-link:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: rgba(116, 177, 187, 0.08);
+}
+
+[data-theme="light"] .flow-tab-btn.active {
+  background: #1d3c62;
+  color: #ffffff;
+  border-color: #1d3c62;
+}
+
+[data-theme="light"] .flow-tab-btn.flow-tab-sim-link {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #1d3c62;
+  font-weight: 600;
+}
+
+[data-theme="light"] .flow-tab-btn.flow-tab-sim-link:hover {
+  background: #f1f5f9;
+  border-color: #1d3c62;
+  color: #1d3c62;
+}
+
+/* Efecto de foco sutil al subir desde la consola (sin neón) */
+.flow-tab-selector.highlight-pulse {
+  animation: pulseTabsCorporate 1.8s ease-out;
+}
+
+@keyframes pulseTabsCorporate {
+  0% {
+    box-shadow: 0 0 0 0 rgba(29, 60, 98, 0.2);
+  }
+  40% {
+    box-shadow: 0 0 0 6px rgba(29, 60, 98, 0.15);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(29, 60, 98, 0);
+  }
+}
+
+/* Contenedor del SVG */
+.svg-flow-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.svg-flow-container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 14px 0 6px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.interactive-flow-svg {
+  width: 100%;
+  min-width: 760px;
+  max-width: 920px;
+  margin: 0 auto;
+  display: block;
+  overflow: visible;
+}
+
+/* ----------------------------------------------------
+   ATENUACIÓN DE NODOS FUERA DE LA RUTA ACTIVA
+   ---------------------------------------------------- */
+.interactive-flow-svg.has-selection .svg-node-group.dimmed {
+  opacity: 0.18 !important;
+  filter: grayscale(0.95) contrast(0.85) !important;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.interactive-flow-svg.has-selection .svg-node-group.dimmed:hover {
+  opacity: 0.75 !important;
+  filter: none !important;
+}
+
+/* NODOS INVOLUCRADOS EN LA RUTA ACTIVA: 100% VISIBLES */
+.svg-node-group.in-path {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Pasos previos de la ruta activa (ej: 1 y 2 cuando 3B está activo) */
+.svg-node-group.in-path:not(.selected) .svg-node-rect {
+  stroke-width: 2px;
+  stroke: var(--accent-primary);
+}
+
+[data-theme="light"] .svg-node-group.in-path:not(.selected) .svg-node-rect {
+  stroke: #1d3c62;
+}
+
+/* NODO SELECCIONADO / DESTINO ACTIVO (ej: 3B) */
+.svg-node-group.selected {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.svg-node-group.selected .svg-node-rect {
+  stroke: var(--accent-primary) !important;
+  stroke-width: 3.5px !important;
+  fill: var(--bg-card-elevated) !important;
+}
+
+[data-theme="light"] .svg-node-group.selected .svg-node-rect {
+  stroke: #1d3c62 !important;
+  fill: #f4f8fa !important;
+}
+
+.svg-node-group.selected .rect-warning {
+  stroke: #b45309 !important;
+}
+
+[data-theme="light"] .svg-node-group.selected .rect-warning {
+  stroke: #b45309 !important;
+  fill: #fffbeb !important;
+}
+
+/* Nodo de excepción (Caso Límite) cuando está seleccionado */
+.svg-node-group.selected .rect-human {
+  stroke: #b91c1c !important;
+  stroke-width: 3.5px !important;
+}
+
+[data-theme="light"] .svg-node-group.selected .rect-human {
+  stroke: #b91c1c !important;
+  fill: #fef2f2 !important;
+}
+
+/* ----------------------------------------------------
+   LÍNEAS DE CONEXIÓN ARQUITECTÓNICAS (SIN NEÓN NI LÁSER)
+   ---------------------------------------------------- */
+.svg-flow-line {
+  stroke: var(--border-color);
+  stroke-width: 2;
+  fill: none;
+  transition: stroke 0.2s ease, stroke-width 0.2s ease;
+}
+
+/* Líneas inactivas fuera de la ruta */
+.interactive-flow-svg.has-selection .svg-flow-line:not(.active) {
+  opacity: 0.18 !important;
+  stroke-width: 1.8px !important;
+}
+
+/* Línea activa sobria y limpia */
+.svg-flow-line.active {
+  stroke: var(--accent-primary) !important;
+  stroke-width: 2.8px !important;
+  stroke-dasharray: none !important;
+  animation: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+[data-theme="light"] .svg-flow-line.active {
+  stroke: #1d3c62 !important;
+}
+
+.svg-flow-line.line-danger {
+  stroke: #b91c1c !important;
+  stroke-width: 3px !important;
+  stroke-dasharray: 6 3 !important;
+  animation: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+[data-theme="light"] .svg-flow-line.line-danger {
+  stroke: #b91c1c !important;
+}
+
+/* Rótulos de camino con halo técnico limpio */
+.svg-path-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  paint-order: stroke fill;
+  stroke: var(--bg-card);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  transition: opacity var(--transition-fast);
+}
+
+.svg-path-label.dimmed {
+  opacity: 0.18 !important;
+}
+
+.svg-path-label.yes { 
+  fill: #15803d; 
+}
+[data-theme="light"] .svg-path-label.yes { 
+  fill: #15803d; 
+}
+
+.svg-path-label.no { 
+  fill: #b45309; 
+}
+[data-theme="light"] .svg-path-label.no { 
+  fill: #b45309; 
+}
+
+/* Nodos base */
+.svg-node-group {
+  cursor: pointer;
+  outline: none;
+  transition: opacity var(--transition-fast);
+}
+
+.svg-node-rect {
+  fill: var(--bg-card);
+  stroke: #cbd5e1;
+  stroke-width: 1.5;
+  transition: stroke var(--transition-fast);
+}
+
+[data-theme="light"] .svg-node-rect {
+  fill: #ffffff;
+  stroke: #cbd5e1;
+}
+
+.rect-start {
+  stroke: #5c6d77;
+}
+
+.rect-decision {
+  stroke: #c2782e;
+}
+
+.rect-action {
+  stroke: var(--accent-primary);
+}
+
+[data-theme="light"] .rect-action {
+  stroke: #1d3c62;
+}
+
+.rect-success {
+  stroke: #15803d;
+}
+
+.rect-warning {
+  stroke: #b45309;
+}
+
+.rect-human {
+  stroke: #b91c1c;
+  fill: rgba(185, 28, 28, 0.05);
+}
+
+[data-theme="light"] .rect-human {
+  fill: #fef2f2;
+}
+
+.svg-node-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  fill: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.svg-node-title {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 700;
+  fill: var(--text-primary);
+}
+
+[data-theme="light"] .svg-node-title {
+  fill: #0f172a;
+}
+
+.svg-node-sub {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  fill: var(--text-muted);
+}
+
+.text-accent { fill: var(--accent-primary); }
+.text-warning { fill: #b45309; }
+.text-success { fill: #15803d; }
+.text-danger { fill: #b91c1c; }
+
+[data-theme="light"] .text-accent { fill: #1d3c62; }
+[data-theme="light"] .text-warning { fill: #b45309; }
+[data-theme="light"] .text-success { fill: #15803d; }
+[data-theme="light"] .text-danger { fill: #b91c1c; }
+
+/* ----------------------------------------------------
+   BADGE SOBRE EL NODO ACTIVO (ETIQUETA TÉCNICA PLANA)
+   ---------------------------------------------------- */
+.svg-active-badge-group {
+  pointer-events: none;
+}
+
+.badge-rect-active {
+  fill: #1d3c62;
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+[data-theme="light"] .badge-rect-active {
+  fill: #1d3c62;
+  stroke: #ffffff;
+}
+
+.badge-rect-danger {
+  fill: #b91c1c;
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+[data-theme="light"] .badge-rect-danger {
+  fill: #b91c1c;
+  stroke: #ffffff;
+}
+
+.badge-rect-success {
+  fill: #15803d;
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+[data-theme="light"] .badge-rect-success {
+  fill: #15803d;
+  stroke: #ffffff;
+}
+
+.badge-rect-warning {
+  fill: #b45309;
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+[data-theme="light"] .badge-rect-warning {
+  fill: #b45309;
+  stroke: #ffffff;
+}
+
+.badge-text-active {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  fill: #ffffff;
+  letter-spacing: 0.05em;
+}
+
+/* ----------------------------------------------------
+   RUTA DE EJECUCIÓN AGÉNTICA (BREADCRUMB PIPELINE CORPORATIVO)
+   ---------------------------------------------------- */
+.flow-breadcrumb-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+[data-theme="light"] .flow-breadcrumb-container {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.breadcrumb-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.breadcrumb-label-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+[data-theme="light"] .breadcrumb-label-tag {
+  color: #1d3c62;
+}
+
+.breadcrumb-step-count {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.breadcrumb-steps-track {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.breadcrumb-step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+}
+
+.breadcrumb-step-pill:hover {
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+.breadcrumb-step-pill.completed {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.35);
+  color: #4ade80;
+}
+
+[data-theme="light"] .breadcrumb-step-pill.completed {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+.breadcrumb-step-pill.active {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #0b1726;
+  font-weight: 700;
+}
+
+[data-theme="light"] .breadcrumb-step-pill.active {
+  background: #1d3c62;
+  border-color: #1d3c62;
+  color: #ffffff;
+}
+
+.breadcrumb-step-pill.active.step-danger {
+  background: #b91c1c !important;
+  border-color: #b91c1c !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .breadcrumb-step-pill.active.step-danger {
+  background: #b91c1c !important;
+  border-color: #b91c1c !important;
+}
+
+.breadcrumb-step-pill.pending {
+  opacity: 0.5;
+}
+
+.step-now-badge {
+  background: rgba(11, 23, 38, 0.25);
+  color: #0b1726;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 2px;
+  letter-spacing: 0.04em;
+}
+
+[data-theme="light"] .step-now-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.step-danger .step-now-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.breadcrumb-arrow {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.breadcrumb-arrow.completed-arrow {
+  color: var(--accent-primary);
+}
+
+[data-theme="light"] .breadcrumb-arrow.completed-arrow {
+  color: #1d3c62;
+}
+
+/* ----------------------------------------------------
+   TARJETA EXPLICATIVA INTERACTIVA DEL PASO
+   ---------------------------------------------------- */
+.svg-selected-explainer {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 162px;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .svg-selected-explainer {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  border-left-color: #1d3c62;
+}
+
+/* EFECTO FLASH ESTÁTICO (CERO SALTO DE LAYOUT, SIN SCALE NI TRANSLATE) */
+.svg-selected-explainer.explainer-flash {
+  animation: flashExplainerCard 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.svg-selected-explainer.explainer-flash .explainer-title {
+  animation: flashTextTitle 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes flashExplainerCard {
+  0% {
+    background-color: rgba(116, 177, 187, 0.28);
+    border-color: var(--accent-primary);
+    border-left-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(116, 177, 187, 0.45), 0 0 28px rgba(116, 177, 187, 0.35), var(--shadow-md);
+  }
+  30% {
+    background-color: rgba(116, 177, 187, 0.2);
+    border-color: var(--accent-primary);
+    border-left-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(116, 177, 187, 0.32), 0 0 18px rgba(116, 177, 187, 0.22), var(--shadow-sm);
+  }
+  65% {
+    background-color: rgba(116, 177, 187, 0.08);
+    border-color: rgba(116, 177, 187, 0.45);
+    border-left-color: var(--accent-primary);
+    box-shadow: 0 0 0 1px rgba(116, 177, 187, 0.15);
+  }
+  100% {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    border-left-color: var(--accent-primary);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+@keyframes flashTextTitle {
+  0% {
+    color: var(--accent-primary);
+  }
+  45% {
+    color: var(--accent-primary);
+  }
+  100% {
+    color: var(--text-primary);
+  }
+}
+
+[data-theme="light"] .svg-selected-explainer.explainer-flash {
+  animation: flashExplainerCardLight 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-theme="light"] .svg-selected-explainer.explainer-flash .explainer-title {
+  animation: flashTextTitleLight 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes flashExplainerCardLight {
+  0% {
+    background-color: #dbeafe;
+    border-color: #1d3c62;
+    border-left-color: #1d3c62;
+    box-shadow: 0 0 0 3px rgba(29, 60, 98, 0.32), 0 0 24px rgba(29, 60, 98, 0.2), var(--shadow-md);
+  }
+  30% {
+    background-color: #eaf3f5;
+    border-color: #1d3c62;
+    border-left-color: #1d3c62;
+    box-shadow: 0 0 0 2px rgba(29, 60, 98, 0.2), 0 0 14px rgba(29, 60, 98, 0.12), var(--shadow-sm);
+  }
+  65% {
+    background-color: #f3f8f9;
+    border-color: rgba(29, 60, 98, 0.35);
+    border-left-color: #1d3c62;
+    box-shadow: 0 0 0 1px rgba(29, 60, 98, 0.1);
+  }
+  100% {
+    background-color: #ffffff;
+    border-color: #e2e8f0;
+    border-left-color: #1d3c62;
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+@keyframes flashTextTitleLight {
+  0% {
+    color: #1d3c62;
+  }
+  45% {
+    color: #1d3c62;
+  }
+  100% {
+    color: #0f172a;
+  }
+}
+
+.explainer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-sans);
+}
+
+.badge-primary {
+  background: var(--accent-primary-soft);
+  border: 1px solid var(--border-highlight);
+  color: var(--accent-primary);
+}
+
+[data-theme="light"] .badge-primary {
+  background: rgba(29, 60, 98, 0.08);
+  border-color: rgba(29, 60, 98, 0.25);
+  color: #1d3c62;
+}
+
+.explainer-actor {
+  font-size: 0.82rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.explainer-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .explainer-title {
+  color: #0f172a;
+}
+
+.explainer-desc {
+  font-size: 0.94rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.explainer-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.explainer-action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-down-to-sim {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: var(--brand-navy);
+  border: 1.5px solid var(--accent-primary);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-down-to-sim:hover {
+  background: var(--accent-primary);
+  color: #0b1726;
+  border-color: var(--accent-primary);
+}
+
+[data-theme="light"] .btn-down-to-sim {
+  background: #1d3c62;
+  color: #ffffff;
+  border: 1.5px solid #1d3c62;
+}
+
+[data-theme="light"] .btn-down-to-sim:hover {
+  background: #142b47;
+  border-color: #142b47;
+  color: #ffffff;
+}
+
+/* RESPONSIVE ULTRA-COMPACTO (DESDE 600px HASTA 272 x 480) */
+@media (max-width: 600px) {
+  .flow-tab-selector {
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .flow-tab-btn {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .svg-flow-wrapper {
+    padding: 14px 12px;
+    gap: 12px;
+  }
+
+  .flow-breadcrumb-container {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .svg-selected-explainer {
+    padding: 14px 14px;
+    min-height: 0;
+  }
+
+  .explainer-title {
+    font-size: 1.05rem;
+  }
+
+  .explainer-desc {
+    font-size: 0.85rem;
+  }
+
+  .btn-down-to-sim {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .svg-flow-wrapper {
+    padding: 10px 8px;
+  }
+
+  .flow-tab-btn {
+    font-size: 0.76rem;
+    padding: 7px 8px;
+  }
+
+  .breadcrumb-label-tag {
+    font-size: 0.72rem;
+  }
+
+  .breadcrumb-step-pill {
+    font-size: 0.74rem;
+    padding: 5px 8px;
+  }
+
+  .svg-selected-explainer {
+    padding: 12px 10px;
+  }
+
+  .explainer-title {
+    font-size: 0.96rem;
+  }
+
+  .explainer-desc {
+    font-size: 0.8rem;
+  }
+
+  .explainer-hint {
+    font-size: 0.74rem;
+  }
+
+  .btn-down-to-sim {
+    font-size: 0.76rem;
+    padding: 7px 8px;
+    gap: 5px;
+  }
+}

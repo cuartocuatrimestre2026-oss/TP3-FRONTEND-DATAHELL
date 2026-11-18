@@ -1,0 +1,428 @@
+:root {
+  /* ========================================================
+     TAP2ORDER × DATAHELL CORPORATE DESIGN SYSTEM (PALETA OFICIAL DEL LOGO)
+     Colores extraídos directamente de tap2order-logo.png
+     ======================================================== */
+  --brand-navy: #1d3c62;           /* Azul Marino Naval Oficial del Logo */
+  --brand-navy-dark: #12263f;      /* Marino Profundo */
+  --brand-navy-midnight: #0b1726;  /* Noche de Crucero */
+  --brand-sea-teal: #74b1bb;       /* Verde Agua Pizarra Oficial del Logo */
+  --brand-teal: #74b1bb;           /* Aliased para compatibilidad */
+  --brand-slate: #5c6d77;          /* Gris Pizarra Oficial del Logo */
+  --brand-sand: #e0d6c6;           /* Arena Cálida / Lino Oficial del Logo */
+  --brand-amber: #c2782e;          /* Ámbar Gastronómico Cálido (sin flúor) */
+
+  /* Fondos de interfaz Modo Oscuro (Marino Ejecutivo) */
+  --bg-page: #0b1726;
+  --bg-card: #12263f;
+  --bg-card-elevated: #18314e;
+  --bg-card-glass: rgba(18, 38, 63, 0.92);
+  
+  --header-bg: rgba(11, 23, 38, 0.94);
+  --footer-bg: #070f1a;
+
+  /* Textos de Alto Contraste */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+
+  /* Acentos Institucionales */
+  --accent-primary: #74b1bb;
+  --accent-primary-hover: #8fc2cb;
+  --accent-primary-soft: rgba(116, 177, 187, 0.14);
+
+  --accent-amber: #c2782e;
+  --accent-amber-hover: #a86422;
+  --accent-amber-soft: rgba(194, 120, 46, 0.16);
+
+  --accent-cyan: #74b1bb;
+  --accent-cyan-soft: rgba(116, 177, 187, 0.12);
+
+  --accent-success: #22c55e;       /* Verde accesible en fondo oscuro */
+  --accent-success-soft: rgba(34, 197, 94, 0.15);
+
+  --accent-warning: #f59e0b;       /* Ámbar accesible en fondo oscuro */
+  --accent-warning-soft: rgba(245, 158, 11, 0.15);
+
+  --accent-danger: #f87171;        /* Rojo accesible en fondo oscuro */
+  --accent-danger-soft: rgba(248, 113, 113, 0.15);
+
+  /* Bordes y sombras físicas naturales (CERO NEÓN) */
+  --border-color: rgba(255, 255, 255, 0.12);
+  --border-highlight: rgba(116, 177, 187, 0.45);
+  --border-amber: rgba(194, 120, 46, 0.35);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.45);
+  --shadow-teal-glow: 0 4px 12px rgba(116, 177, 187, 0.15);
+
+  /* Scrollbar Corporativo Alto Contraste */
+  --scrollbar-track: #070f1a;
+  --scrollbar-thumb: #233b5d;
+  --scrollbar-thumb-hover: #74b1bb;
+
+  /* Tipografías Profesionales */
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+
+  --transition-fast: 0.16s ease;
+  --transition-normal: 0.24s ease;
+}
+
+[data-theme="light"] {
+  /* ========================================================
+     MODO CLARO CORPORATIVO (ESTILO STRIPE / NAVAL POS)
+     ======================================================== */
+  --bg-page: #f8fafc;            /* Gris perla ejecutivo ultra limpio */
+  --bg-card: #ffffff;            /* Blanco puro inmaculado */
+  --bg-card-elevated: #f1f5f9;   /* Pizarra clara */
+  --bg-card-glass: rgba(255, 255, 255, 0.96);
+  
+  --header-bg: rgba(248, 250, 252, 0.95);
+  --footer-bg: #e2e8f0;
+
+  /* Textos Ejecutivos */
+  --text-primary: #0f172a;       /* Slate 900 */
+  --text-secondary: #334155;     /* Slate 700 */
+  --text-muted: #64748b;         /* Slate 500 */
+
+  /* Acentos Basados en el Logo */
+  --accent-primary: #1d3c62;     /* Azul Marino Naval del Logo */
+  --accent-primary-hover: #142b47;
+  --accent-primary-soft: rgba(29, 60, 98, 0.08);
+
+  --accent-teal: #3d7580;        /* Sea Teal legible sobre fondos claros */
+  --accent-teal-soft: rgba(116, 177, 187, 0.16);
+
+  --brand-teal: #3d7580;
+
+  --accent-amber: #b45309;
+  --accent-amber-hover: #92400e;
+  --accent-amber-soft: rgba(180, 83, 9, 0.1);
+
+  --accent-cyan: #1d3c62;
+  --accent-cyan-soft: rgba(29, 60, 98, 0.08);
+
+  --accent-success: #15803d;
+  --accent-success-soft: rgba(21, 128, 61, 0.1);
+
+  --accent-warning: #b45309;
+  --accent-warning-soft: rgba(180, 83, 9, 0.1);
+
+  --accent-danger: #b91c1c;
+  --accent-danger-soft: rgba(185, 28, 28, 0.1);
+
+  --border-color: #e2e8f0;
+  --border-highlight: rgba(29, 60, 98, 0.35);
+  --border-amber: rgba(180, 83, 9, 0.25);
+
+  /* Sombras Físicas Sutiles (CERO NEÓN) */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.09);
+  --shadow-teal-glow: 0 2px 8px rgba(29, 60, 98, 0.06);
+
+  /* Scrollbar Corporativo Alto Contraste */
+  --scrollbar-track: #e2e8f0;
+  --scrollbar-thumb: #5c6d77;        /* Gris pizarra oficial del logo: visible y nítido */
+  --scrollbar-thumb-hover: #1d3c62;  /* Azul marino naval oficial del logo */
+}
+
+/* ========================================================
+   RESETS Y ACCESIBILIDAD UNIVERSAL (WCAG 2.1 AAA)
+   ======================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  min-width: 272px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  overflow-x: hidden;
+  min-width: 272px;
+}
+
+/* Enlace de salto de accesibilidad (Skip Link) */
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: 16px;
+  background: var(--brand-teal);
+  color: #0a1524;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.95rem;
+  z-index: 99999;
+  text-decoration: none;
+  transition: top var(--transition-fast);
+  box-shadow: var(--shadow-md);
+}
+
+.skip-link:focus {
+  top: 16px;
+  outline: 3px solid #ffffff;
+}
+
+/* Foco visible estricto para navegación por teclado (Criterio WCAG 2.4.7) */
+:focus-visible {
+  outline: 3px solid var(--accent-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Tipografía de títulos */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Contenedor central responsivo */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* Clases de sección unificadas */
+.section-compact {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.bg-alt {
+  background: var(--bg-card-elevated);
+}
+
+.section-title-wrap {
+  text-align: center;
+  max-width: 980px;
+  width: 100%;
+  margin: 0 auto 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: var(--accent-primary-soft);
+  border: 1px solid var(--border-highlight);
+  color: var(--accent-primary);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  max-width: 100%;
+  text-align: center;
+}
+
+[data-theme="light"] .section-tag {
+  background: rgba(29, 60, 98, 0.08);
+  color: #1d3c62;
+  border-color: rgba(29, 60, 98, 0.25);
+}
+
+.section-heading {
+  font-size: clamp(1.32rem, 5.5vw, 2.75rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.section-desc {
+  font-size: 1.02rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 960px;
+  text-wrap: balance;
+}
+
+@media (max-width: 480px) {
+  .section-compact {
+    padding: 36px 0;
+  }
+  .section-title-wrap {
+    margin: 0 auto 24px;
+    gap: 8px;
+  }
+  .section-tag {
+    font-size: 0.72rem;
+    padding: 5px 10px;
+    gap: 5px;
+  }
+  .section-desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 340px) {
+  .section-compact {
+    padding: 26px 0;
+  }
+  .section-desc {
+    font-size: 0.82rem;
+  }
+}
+
+/* Badges y chips comunes */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  background: var(--bg-card-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.chip-teal {
+  background: var(--accent-primary-soft);
+  border-color: var(--border-highlight);
+  color: var(--accent-primary);
+}
+
+.chip-amber {
+  background: var(--accent-amber-soft);
+  border-color: var(--border-amber);
+  color: var(--accent-amber);
+}
+
+/* ========================================================
+   BARRA DE DESPLAZAMIENTO (SCROLLBAR) DE ALTO CONTRASTE
+   Accesibilidad universal WCAG 2.1: visible tanto en Chrome/Edge como en Firefox
+   ======================================================== */
+html, * {
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 6px;
+  border: 2.5px solid var(--scrollbar-track); /* Da respiro y destaque al thumb */
+  transition: background-color var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--brand-navy);
+}
+
+/* Botón flotante para volver al inicio */
+.floating-top-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  background: var(--brand-navy);
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-highlight);
+  border-radius: var(--radius-full);
+  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+.floating-top-btn:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+  .floating-top-btn {
+    bottom: 12px;
+    right: 12px;
+    padding: 7px 12px;
+    font-size: 0.74rem;
+    gap: 4px;
+  }
+}

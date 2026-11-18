@@ -1,0 +1,618 @@
+/* ========================================================
+   CONSOLA DE SIMULACIÓN Y TICKET DIGITAL TAP2ORDER
+   ======================================================== */
+
+.cruise-simulator-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+  scroll-margin-top: 80px;
+}
+
+/* Animación de feedback visual al volver desde el diagrama (sobrio) */
+.cruise-simulator-card.highlight-focus {
+  animation: pulseSimulatorCorporate 1.8s ease-out;
+}
+
+@keyframes pulseSimulatorCorporate {
+  0% {
+    box-shadow: 0 0 0 0 rgba(29, 60, 98, 0.2);
+    border-color: #1d3c62;
+  }
+  30% {
+    box-shadow: 0 0 0 4px rgba(29, 60, 98, 0.12);
+    border-color: #1d3c62;
+  }
+  100% {
+    box-shadow: var(--shadow-sm);
+    border-color: var(--border-color);
+  }
+}
+
+.sim-top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: var(--bg-card-elevated);
+  border-bottom: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sim-brand-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.sim-mode-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sim-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-sim-to-flow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  background: rgba(116, 177, 187, 0.12);
+  border: 1.5px solid var(--accent-primary);
+  color: var(--accent-primary);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-sim-to-flow:hover {
+  background: var(--accent-primary);
+  color: #0b1726;
+  border-color: var(--accent-primary);
+}
+
+[data-theme="light"] .btn-sim-to-flow {
+  background: #ffffff;
+  border: 1.5px solid #1d3c62;
+  color: #1d3c62;
+}
+
+[data-theme="light"] .btn-sim-to-flow:hover {
+  background: #1d3c62;
+  color: #ffffff;
+}
+
+.sim-tab-pill {
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sim-tab-pill:hover {
+  border-color: var(--border-highlight);
+  color: var(--text-primary);
+}
+
+.sim-tab-pill.active {
+  background: var(--accent-primary);
+  color: #0b1726;
+  border-color: var(--accent-primary);
+  font-weight: 700;
+}
+
+[data-theme="light"] .sim-tab-pill.active {
+  background: #1d3c62;
+  color: #ffffff;
+  border-color: #1d3c62;
+}
+
+/* Grilla del simulador */
+.sim-body-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 18px 22px;
+}
+
+.sim-inputs-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compact-label {
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.compact-select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-page);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  font-family: inherit;
+  outline: none;
+  font-weight: 600;
+  transition: border-color var(--transition-fast);
+}
+
+.compact-select:focus {
+  border-color: var(--brand-teal);
+}
+
+.toggles-box {
+  background: var(--bg-page);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.box-title {
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 6px;
+}
+
+.compact-toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 5px 0;
+  user-select: none;
+}
+
+.compact-toggle-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--brand-teal);
+  cursor: pointer;
+}
+
+.alert-toggle {
+  border-top: 1px dashed var(--border-color);
+  padding-top: 10px;
+}
+
+.preset-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 10px;
+  align-items: center;
+}
+
+.preset-label {
+  font-size: 0.74rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.preset-chip {
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.preset-chip:hover {
+  border-color: var(--brand-teal);
+  color: var(--text-primary);
+  background: var(--accent-primary-soft);
+}
+
+/* Ticket Digital de Crucero (Comanda Inteligente) */
+.cruise-digital-ticket {
+  background: var(--bg-page);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.cruise-digital-ticket::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--accent-primary);
+}
+
+[data-theme="light"] .cruise-digital-ticket::before {
+  background: #1d3c62;
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.ticket-brand {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+[data-theme="light"] .ticket-brand {
+  color: #5c6d77;
+}
+
+.ticket-order-id {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ticket-status-pill {
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.ticket-status-pill.success {
+  background: rgba(34, 197, 94, 0.18);
+  color: #86efac;
+  border-color: rgba(34, 197, 94, 0.45);
+}
+
+.ticket-status-pill.warning {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fde68a;
+  border-color: rgba(245, 158, 11, 0.45);
+}
+
+.ticket-status-pill.danger {
+  background: rgba(248, 113, 113, 0.18);
+  color: #fca5a5;
+  border-color: rgba(248, 113, 113, 0.45);
+}
+
+[data-theme="light"] .ticket-status-pill.success {
+  background: #f0fdf4;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+
+[data-theme="light"] .ticket-status-pill.warning {
+  background: #fffbeb;
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+[data-theme="light"] .ticket-status-pill.danger {
+  background: #fef2f2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+.ticket-dish-name {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.ticket-meta-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.tag-chip {
+  font-size: 0.76rem;
+  font-family: var(--font-mono);
+  background: var(--bg-card);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.ticket-decision-alert {
+  background: var(--bg-card);
+  border-left: 3px solid var(--accent-primary);
+  padding: 10px 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-top: 8px;
+  border-top: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .ticket-decision-alert {
+  border-left-color: #1d3c62;
+}
+
+.alert-badge-label {
+  display: block;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent-primary);
+  margin-bottom: 3px;
+}
+
+[data-theme="light"] .alert-badge-label {
+  color: #1d3c62;
+}
+
+.alert-message-text {
+  font-size: 0.86rem;
+  color: var(--text-primary);
+  line-height: 1.45;
+}
+
+.ticket-action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 8px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.action-key {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.action-val {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ticket-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.btn-sync-svg {
+  width: 100%;
+  padding: 9px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-sync-svg:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+[data-theme="light"] .btn-sync-svg {
+  color: #334155;
+  border-color: #cbd5e1;
+}
+
+[data-theme="light"] .btn-sync-svg:hover {
+  border-color: #1d3c62;
+  color: #1d3c62;
+  background: #f8fafc;
+}
+
+.btn-switch-flow-up {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--brand-navy);
+  border: 1.5px solid var(--accent-primary);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-switch-flow-up:hover {
+  background: var(--accent-primary);
+  color: #0b1726;
+}
+
+[data-theme="light"] .btn-switch-flow-up {
+  background: #1d3c62;
+  color: #ffffff;
+  border-color: #1d3c62;
+}
+
+[data-theme="light"] .btn-switch-flow-up:hover {
+  background: #142b47;
+  color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .sim-body-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .sim-top-nav {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  .sim-brand-title {
+    font-size: 0.98rem;
+  }
+  .sim-nav-actions {
+    width: 100%;
+    gap: 8px;
+  }
+  .sim-mode-tabs {
+    width: 100%;
+    gap: 6px;
+  }
+  .sim-tab-pill {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 6px 10px;
+    font-size: 0.78rem;
+  }
+  .btn-sim-to-flow {
+    width: 100%;
+    justify-content: center;
+    padding: 7px 10px;
+    font-size: 0.78rem;
+  }
+  .sim-body-grid {
+    padding: 12px 12px;
+    gap: 14px;
+  }
+  .toggles-box {
+    padding: 12px 12px;
+  }
+  .cruise-digital-ticket {
+    padding: 14px 12px;
+  }
+  .ticket-dish-name {
+    font-size: 1.08rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .sim-top-nav {
+    padding: 8px 10px;
+  }
+  .sim-brand-title {
+    font-size: 0.88rem;
+  }
+  .sim-tab-pill {
+    width: 100%;
+    font-size: 0.74rem;
+    padding: 6px 8px;
+  }
+  .sim-body-grid {
+    padding: 10px 8px;
+  }
+  .compact-select {
+    font-size: 0.8rem;
+    padding: 8px 8px;
+  }
+  .toggles-box {
+    padding: 10px 8px;
+  }
+  .compact-toggle-row {
+    font-size: 0.8rem;
+  }
+  .preset-chip {
+    font-size: 0.72rem;
+    padding: 5px 8px;
+  }
+  .cruise-digital-ticket {
+    padding: 10px 8px;
+  }
+  .ticket-order-id {
+    font-size: 0.78rem;
+  }
+  .ticket-status-pill {
+    font-size: 0.68rem;
+    padding: 3px 7px;
+  }
+  .ticket-dish-name {
+    font-size: 0.96rem;
+  }
+  .btn-sync-svg,
+  .btn-switch-flow-up {
+    font-size: 0.75rem;
+    padding: 8px 8px;
+    gap: 5px;
+  }
+}
